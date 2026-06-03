@@ -1,10 +1,7 @@
-
-import db from "../db.js"
-import { usersTable } from "../models/user.model.js"
-import { userRegistrationSchema, userLoginSchema } from "../validations/request.validation.js";
 import bcrypt from "bcrypt";
-import { eq } from "drizzle-orm";
 import jwt from "jsonwebtoken";
+import { createUser, getUserByEmail } from "../services/user.services.js";
+import { userRegistrationSchema, userLoginSchema } from "../validations/request.validation.js";
 
 export const registerUser = async (req, res) => {
     const validation = userRegistrationSchema.safeParse(req.body);
@@ -16,7 +13,7 @@ export const registerUser = async (req, res) => {
     const { firstName, lastName, email, password } = validation.data;
 
     try {
-        const [existingUser] = await db.select().from(usersTable).where(eq(usersTable.email, email));
+        const existingUser = await getUserByEmail(email);
 
         if (existingUser) {
             return res.status(400).json({ success: false, message: `User with email ${email} already exists` });
@@ -24,12 +21,7 @@ export const registerUser = async (req, res) => {
 
         const hashedPassword = await bcrypt.hash(password, 10);
 
-        const [user] = await db.insert(usersTable).values({
-            firstName,
-            lastName,
-            email,
-            password: hashedPassword,
-        }).returning({ id: usersTable.id });
+        const user = await createUser(firstName, lastName, email, hashedPassword);
 
         const payload = {
             id: user.id,
@@ -55,7 +47,7 @@ export const loginUser = async (req, res) => {
     const { email, password } = validation.data;
 
     try {
-        const [user] = await db.select().from(usersTable).where(eq(usersTable.email, email));
+        const user = await getUserByEmail(email);
 
         if (!user) {
             return res.status(404).json({ success: false, message: `User with email ${email} not found` });
@@ -67,7 +59,13 @@ export const loginUser = async (req, res) => {
             return res.status(401).json({ success: false, message: "Invalid password" });
         }
 
-        res.status(200).json({ success: true, data: { userId: user.id }, message: `User with email ${email} logged in successfully` });
+        const payload = {
+            id: user.id
+        };
+
+        const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: "1h" });
+
+        res.status(200).json({ success: true, data: { userId: user.id, token }, message: `User with email ${email} logged in successfully` });
     } catch (error) {
         console.log("Error in login user controller:", error);
         res.status(500).json({ success: false, message: "Internal server error" });
