@@ -1,5 +1,5 @@
 import db from "../db/index.js";
-import { urlsTable } from "../models/user.model.js";
+import { urlsTable } from "../models/index.js";
 
 export async function createUrl(shortUrl, longUrl, userId) {
     const [response] = await db.insert(urlsTable).values({

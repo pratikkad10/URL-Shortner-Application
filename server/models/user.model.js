@@ -9,12 +9,3 @@ export const usersTable = pgTable("users", {
   createdAt: timestamp().defaultNow(),
   updatedAt: timestamp().$onUpdate(() => new Date()),
 });
-
-export const urlsTable = pgTable("urls", {
-  id: uuid().primaryKey().defaultRandom(),
-  shortUrl: varchar({ length: 255 }).notNull().unique(),
-  longUrl: text().notNull(),
-  userId: uuid().notNull().references(() => usersTable.id),
-  createdAt: timestamp().defaultNow(),
-  updatedAt: timestamp().$onUpdate(() => new Date()),
-});
