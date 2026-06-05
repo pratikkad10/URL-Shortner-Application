@@ -11,3 +11,7 @@ export const userLoginSchema = z.object({
     email: z.string().email("Invalid email"),
     password: z.string().min(8, "Password must be at least 8 characters long"),
 });
+
+export const urlShortenSchema = z.object({
+    longUrl: z.string().url("Invalid URL"),
+});
