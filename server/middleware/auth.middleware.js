@@ -20,3 +20,10 @@ export const authMiddleware = async (req, res, next) => {
         return res.status(401).json({ success: false, message: "Unauthorized: Invalid token" });
     }
 }
+
+export const ensureAuthMiddleware = (req, res, next) => {
+    if (!req.user || !req.user.id) {
+        return res.status(401).json({ success: false, message: "Unauthorized: Please Login" });
+    }
+    next();
+}
