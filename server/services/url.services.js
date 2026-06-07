@@ -6,6 +6,6 @@ export async function createUrl(shortUrl, longUrl, userId) {
         shortUrl,
         longUrl,
         userId
-    }).returning({ userId: urlsTable.userId, shortUrl: urlsTable.shortUrl });
+    }).returning({ userId: urlsTable.userId, shortUrl: urlsTable.shortUrl, longUrl: urlsTable.longUrl });
     return response;
 }

@@ -4,11 +4,6 @@ import { urlShortenSchema } from "../validations/request.validation.js";
 
 export const shortenController = async (req, res) => {
     try {
-
-        if (!req.user?.id) {
-            return res.status(401).json({ success: false, message: "User not found" });
-        }
-
         const validation = await urlShortenSchema.safeParseAsync(req.body);
 
         if (!validation.success) {
@@ -19,9 +14,9 @@ export const shortenController = async (req, res) => {
 
         const shortUrl = await generateShortId();
 
-        const response = await createUrl(shortUrl, longUrl, req.user?.id);
+        const response = await createUrl(shortUrl, longUrl, req.user.id);
 
-        return res.status(200).json({
+        return res.status(201).json({
             success: true,
             message: "URL shortened successfully",
             data: response
