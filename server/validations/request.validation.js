@@ -14,4 +14,5 @@ export const userLoginSchema = z.object({
 
 export const urlShortenSchema = z.object({
     longUrl: z.string().url("Invalid URL"),
+    shortUrl: z.string().optional(),
 });
