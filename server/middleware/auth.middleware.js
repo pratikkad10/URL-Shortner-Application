@@ -1,15 +1,9 @@
 import { verifyUserToken } from "../utils/token.js";
 
 export const authMiddleware = async (req, res, next) => {
-    const authHeader = req.headers['authorization'];
+    const token = req.cookies.token;
 
-    if (!authHeader) return next();
-
-    if (!authHeader.startsWith("Bearer ")) {
-        return res.status(401).json({ success: false, message: "Unauthorized: Invalid token format, Authorization header must start with Bearer <token>" });
-    }
-
-    const [_, token] = authHeader.split(" "); // ["Bearer", "token"]
+    if (!token) return next();
 
     try {
         const decodedToken = await verifyUserToken(token);

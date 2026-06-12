@@ -1,4 +1,4 @@
-import { createUser, getUserByEmail} from "../services/user.services.js";
+import { createUser, getUserByEmail } from "../services/user.services.js";
 import { userRegistrationSchema, userLoginSchema } from "../validations/request.validation.js";
 import { comparePassword, hashPassword } from "../utils/hash.js";
 import { generateUserToken } from "../utils/token.js";
@@ -63,9 +63,26 @@ export const loginUser = async (req, res) => {
             return res.status(400).json({ success: false, message: "Token generation failed" });
         }
 
-        res.status(200).json({ success: true, data: { userId: user.id, token }, message: `User with email ${email} logged in successfully` });
+        res.cookie("token", token, {
+            httpOnly: true,
+            secure: true,
+            sameSite: "strict",
+            maxAge: 60 * 60 * 24 * 7
+        });
+
+        res.status(200).json({ success: true, data: { userId: user.id }, message: `User with email ${email} logged in successfully` });
     } catch (error) {
         console.log("Error in login user controller:", error);
+        res.status(500).json({ success: false, message: "Internal server error" });
+    }
+};
+
+export const logoutUser = async (req, res) => {
+    try {
+        res.clearCookie("token");
+        res.status(200).json({ success: true, message: "User logged out successfully" });
+    } catch (error) {
+        console.log("Error in logout user controller:", error);
         res.status(500).json({ success: false, message: "Internal server error" });
     }
 };
