@@ -4,5 +4,9 @@ export const urlService = {
     shortenUrl: async (urlData) => {
         const response = await api.post('/url/shorten', urlData);
         return response.data;
+    },
+    getCodes: async () => {
+        const response = await api.get('/url/codes');
+        return response.data;
     }
 };

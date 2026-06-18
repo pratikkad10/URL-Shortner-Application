@@ -1,6 +1,6 @@
 import db from "../db/index.js";
 import { urlsTable, clicksTable } from "../models/index.js";
-import { and, eq } from "drizzle-orm";
+import { and, eq, count, desc, sql } from "drizzle-orm";
 
 export async function createUrl(shortUrl, longUrl, userId) {
     const [response] = await db.insert(urlsTable).values({
@@ -16,8 +16,21 @@ export async function findUrlByShortUrl(shortUrl) {
     return url;
 }
 
+
 export async function findUrlsByUserId(userId) {
-    const [urls] = await db.select().from(urlsTable).where(eq(urlsTable.userId, userId));
+    const urls = await db.select({
+        id: urlsTable.id,
+        shortUrl: urlsTable.shortUrl,
+        longUrl: urlsTable.longUrl,
+        createdAt: urlsTable.createdAt,
+        clicks: sql`count(${clicksTable.id})`.mapWith(Number)
+    })
+        .from(urlsTable)
+        .leftJoin(clicksTable, eq(urlsTable.id, clicksTable.urlId))
+        .where(eq(urlsTable.userId, userId))
+        .groupBy(urlsTable.id)
+        .orderBy(desc(urlsTable.createdAt));
+
     return urls;
 }
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { timeAgo } from '../../../utils/format';
+import { timeAgo, getShortUrlBase } from '../../../utils/format';
 
 const ActivityItem = ({ activity, isLast }) => {
     // Map backend data to UI format
@@ -18,6 +18,8 @@ const ActivityItem = ({ activity, isLast }) => {
         colorClass = 'bg-primary-container/20 text-primary';
     }
 
+    const domain = getShortUrlBase();
+
     return (
         <div className="flex gap-4 relative">
             {!isLast && <div className="absolute left-[15px] top-8 bottom-[-24px] w-[2px] bg-surface-container"></div>}
@@ -26,7 +28,7 @@ const ActivityItem = ({ activity, isLast }) => {
             </div>
             <div>
                 <p className="text-body-sm font-body-sm text-on-surface">
-                    <span className="font-medium">{typeText}</span> {text} <span className="text-primary font-mono-sm">lsnp.co/{activity.shortUrl}</span>
+                    <span className="font-medium">{typeText}</span> {text} <span className="text-primary font-mono-sm">{domain}/{activity.shortUrl}</span>
                 </p>
                 <p className="text-label-sm font-label-sm text-on-surface-variant mt-1">{timeAgo(activity.timestamp)}</p>
             </div>
