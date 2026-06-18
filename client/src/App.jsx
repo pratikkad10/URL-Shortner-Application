@@ -9,6 +9,7 @@ import Register from './pages/Register/Register';
 import Dashboard from './pages/Dashboard/Dashboard';
 import Links from './pages/Links/Links';
 import CreateLink from './pages/Links/CreateLink';
+import Analytics from './pages/Analytics/Analytics';
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/links" element={<Links />} />
           <Route path="/links/create" element={<CreateLink />} />
+          <Route path="/analytics" element={<Analytics />} />
         </Route>
       </Routes>
     </BrowserRouter>
