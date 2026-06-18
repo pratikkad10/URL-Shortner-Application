@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 const Footer = () => {
     return (
         <footer className="bg-surface-container-lowest border-t border-outline-variant flat no shadows w-full mt-auto">
@@ -7,10 +9,10 @@ const Footer = () => {
                     <p className="text-body-sm font-body-sm text-on-surface-variant mt-1">© 2024 LinkSnap Inc. All rights reserved.</p>
                 </div>
                 <div className="flex flex-wrap gap-6 justify-center">
-                    <a className="text-on-surface-variant dark:text-surface-variant text-label-sm font-label-sm hover:text-primary dark:hover:text-inverse-primary underline transition-all" href="#">Privacy Policy</a>
-                    <a className="text-on-surface-variant dark:text-surface-variant text-label-sm font-label-sm hover:text-primary dark:hover:text-inverse-primary underline transition-all" href="#">Terms of Service</a>
-                    <a className="text-on-surface-variant dark:text-surface-variant text-label-sm font-label-sm hover:text-primary dark:hover:text-inverse-primary underline transition-all" href="#">Status</a>
-                    <a className="text-on-surface-variant dark:text-surface-variant text-label-sm font-label-sm hover:text-primary dark:hover:text-inverse-primary underline transition-all" href="#">Contact</a>
+                    <Link className="text-on-surface hover:text-primary hover:underline transition-colors duration-200 text-label-sm font-medium" to="/privacy">Privacy Policy</Link>
+                    <Link className="text-on-surface hover:text-primary hover:underline transition-colors duration-200 text-label-sm font-medium" to="/terms">Terms of Service</Link>
+                    <Link className="text-on-surface hover:text-primary hover:underline transition-colors duration-200 text-label-sm font-medium" to="/status">Status</Link>
+                    <Link className="text-on-surface hover:text-primary hover:underline transition-colors duration-200 text-label-sm font-medium" to="/contact">Contact</Link>
                 </div>
             </div>
         </footer>

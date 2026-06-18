@@ -46,7 +46,6 @@ const Navbar = () => {
                 <nav className="hidden md:flex items-center gap-6">
                     <Link to="/" className="text-primary font-bold border-b-2 border-primary pb-1 text-label-md font-label-md hover:text-primary transition-colors duration-200 opacity-80">Features</Link>
                     <Link to="/pricing" className="text-on-surface-variant pb-1 text-label-md font-label-md hover:text-primary transition-colors duration-200">Pricing</Link>
-                    <Link to="/resources" className="text-on-surface-variant pb-1 text-label-md font-label-md hover:text-primary transition-colors duration-200">Resources</Link>
                 </nav>
                 <div className="flex items-center gap-6">
                     <div className="flex items-center gap-2 text-on-surface-variant">
