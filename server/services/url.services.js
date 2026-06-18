@@ -17,7 +17,9 @@ export async function findUrlByShortUrl(shortUrl) {
 }
 
 
-export async function findUrlsByUserId(userId) {
+export async function findUrlsByUserId(userId, page = 1, limit = 10) {
+    const offset = (page - 1) * limit;
+
     const urls = await db.select({
         id: urlsTable.id,
         shortUrl: urlsTable.shortUrl,
@@ -29,9 +31,26 @@ export async function findUrlsByUserId(userId) {
         .leftJoin(clicksTable, eq(urlsTable.id, clicksTable.urlId))
         .where(eq(urlsTable.userId, userId))
         .groupBy(urlsTable.id)
-        .orderBy(desc(urlsTable.createdAt));
+        .orderBy(desc(urlsTable.createdAt))
+        .limit(limit)
+        .offset(offset);
 
-    return urls;
+    const [countResult] = await db.select({ count: count() })
+        .from(urlsTable)
+        .where(eq(urlsTable.userId, userId));
+        
+    const totalItems = countResult.count;
+    const totalPages = Math.ceil(totalItems / limit);
+
+    return {
+        items: urls,
+        pagination: {
+            totalItems,
+            totalPages,
+            currentPage: page,
+            limit
+        }
+    };
 }
 
 export async function deleteUrlByShortUrl(shortUrl, userId) {

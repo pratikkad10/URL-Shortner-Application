@@ -58,20 +58,26 @@ export const redirectController = async (req, res) => {
 
 export const getCodesController = async (req, res) => {
     try {
-        const urls = await findUrlsByUserId(req.user.id);
+        const page = parseInt(req.query.page) || 1;
+        const limit = parseInt(req.query.limit) || 10;
+        
+        const result = await findUrlsByUserId(req.user.id, page, limit);
 
-        if (urls.length === 0) {
+        if (result.items.length === 0 && page === 1) {
             return res.status(200).json({
                 success: true,
                 message: "No URL codes generated yet",
-                data: []
+                data: {
+                    items: [],
+                    pagination: result.pagination
+                }
             });
         }
 
         return res.status(200).json({
             success: true,
             message: "URL codes fetched successfully",
-            data: urls
+            data: result
         });
 
     } catch (error) {

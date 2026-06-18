@@ -14,7 +14,7 @@ const RecentLinksTable = () => {
             try {
                 const response = await urlService.getCodes();
                 if (response.success) {
-                    setLinks(response.data);
+                    setLinks(response.data.items || []);
                 }
             } catch (error) {
                 toast.error("Failed to load recent links");
