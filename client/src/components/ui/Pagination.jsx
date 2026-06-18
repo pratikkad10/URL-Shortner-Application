@@ -39,35 +39,20 @@ const Pagination = ({
                 Showing {totalItems > 0 ? startItem : 0}-{endItem} of {totalItems} items
             </div>
             
-            <div className="flex items-center gap-4">
-                <div className="text-body-sm text-on-surface-variant flex items-center gap-2">
-                    Rows per page:
-                    <select 
-                        className="border border-outline-variant rounded bg-transparent text-body-sm font-medium focus:ring-1 focus:ring-primary p-1 cursor-pointer"
-                        value={limit}
-                        onChange={(e) => {
-                            setLimit(Number(e.target.value));
-                            setPage(1);
-                        }}
-                    >
-                        <option value={10}>10</option>
-                        <option value={20}>20</option>
-                        <option value={50}>50</option>
-                    </select>
-                </div>
-
-                <div className="flex items-center gap-1">
+            <div className="flex items-center gap-6">
+                <div className="flex items-center gap-1.5">
                     <button 
-                        className="p-2 border border-outline-variant rounded bg-surface-container-lowest text-on-surface-variant disabled:opacity-50 disabled:cursor-not-allowed hover:bg-surface-container-low transition-colors"
+                        className="w-8 h-8 flex items-center justify-center border border-outline-variant rounded-full bg-surface-container-lowest text-on-surface-variant disabled:opacity-40 disabled:cursor-not-allowed hover:bg-surface-container-low hover:text-on-surface transition-all"
                         onClick={() => setPage(p => Math.max(1, p - 1))}
                         disabled={page === 1 || isLoading}
+                        title="Previous page"
                     >
                         <span className="material-symbols-outlined text-[18px]">chevron_left</span>
                     </button>
                     
                     {getPageNumbers().map((pageNum, idx) => {
                         if (pageNum === '...') {
-                            return <span key={`ellipsis-${idx}`} className="px-2 text-on-surface-variant">...</span>;
+                            return <span key={`ellipsis-${idx}`} className="px-1 text-on-surface-variant">...</span>;
                         }
                         
                         return (
@@ -75,10 +60,10 @@ const Pagination = ({
                                 key={pageNum}
                                 onClick={() => setPage(pageNum)}
                                 disabled={isLoading}
-                                className={`px-3 py-1 rounded text-label-sm font-label-sm transition-colors ${
+                                className={`w-8 h-8 flex items-center justify-center rounded-full text-label-sm font-label-sm transition-all ${
                                     page === pageNum 
-                                        ? 'bg-primary-container text-on-primary font-bold' 
-                                        : 'hover:bg-surface-container text-on-surface-variant'
+                                        ? 'bg-primary text-on-primary font-bold shadow-md transform hover:scale-105' 
+                                        : 'bg-transparent text-on-surface-variant hover:bg-surface-container hover:text-on-surface'
                                 }`}
                             >
                                 {pageNum}
@@ -87,9 +72,10 @@ const Pagination = ({
                     })}
                     
                     <button 
-                        className="p-2 border border-outline-variant rounded bg-surface-container-lowest text-on-surface-variant disabled:opacity-50 disabled:cursor-not-allowed hover:bg-surface-container-low transition-colors"
+                        className="w-8 h-8 flex items-center justify-center border border-outline-variant rounded-full bg-surface-container-lowest text-on-surface-variant disabled:opacity-40 disabled:cursor-not-allowed hover:bg-surface-container-low hover:text-on-surface transition-all"
                         onClick={() => setPage(p => Math.min(totalPages, p + 1))}
                         disabled={page >= totalPages || isLoading || totalPages === 0}
+                        title="Next page"
                     >
                         <span className="material-symbols-outlined text-[18px]">chevron_right</span>
                     </button>
