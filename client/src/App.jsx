@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { Toaster } from 'sonner';
 import MainLayout from './layouts/MainLayout';
 import AuthLayout from './layouts/AuthLayout';
 import Home from './pages/Home/Home';
@@ -8,8 +9,10 @@ import Dashboard from './pages/Dashboard/Dashboard';
 
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
+    <>
+      <Toaster richColors position="top-right" />
+      <BrowserRouter>
+        <Routes>
         {/* Public Routes with Navbar/Footer */}
         <Route element={<MainLayout />}>
           <Route path="/" element={<Home />} />
@@ -26,6 +29,7 @@ function App() {
         <Route path="/dashboard" element={<Dashboard />} />
       </Routes>
     </BrowserRouter>
+    </>
   );
 }
 
