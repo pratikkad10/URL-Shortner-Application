@@ -10,6 +10,7 @@ import Dashboard from './pages/Dashboard/Dashboard';
 import Links from './pages/Links/Links';
 import CreateLink from './pages/Links/CreateLink';
 import Analytics from './pages/Analytics/Analytics';
+import Settings from './pages/Settings/Settings';
 
 function App() {
   return (
@@ -35,6 +36,7 @@ function App() {
           <Route path="/links" element={<Links />} />
           <Route path="/links/create" element={<CreateLink />} />
           <Route path="/analytics" element={<Analytics />} />
+          <Route path="/settings" element={<Settings />} />
         </Route>
       </Routes>
     </BrowserRouter>
