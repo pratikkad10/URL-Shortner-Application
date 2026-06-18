@@ -7,8 +7,8 @@ import OAuthButton from '../../components/ui/OAuthButton';
 import GoogleIcon from '../../components/ui/icons/GoogleIcon';
 import GitHubIcon from '../../components/ui/icons/GitHubIcon';
 import { useForm } from '../../hooks/useForm';
-import { authService } from '../../services/authService';
 import { toast } from 'sonner';
+import { useAuth } from '../../context/AuthContext';
 
 const Register = () => {
     const navigate = useNavigate();
@@ -23,6 +23,8 @@ const Register = () => {
         confirmPassword: '',
         terms: false
     });
+
+    const { register } = useAuth();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -39,26 +41,22 @@ const Register = () => {
         }
         
         setIsLoading(true);
-        try {
-            await authService.register({
-                firstName: formData.firstName,
-                lastName: formData.lastName,
-                email: formData.email,
-                password: formData.password,
-                termsAccepted: formData.terms
-            });
-            
-            // Registration successful!
-            toast.success("Registration successful! Please check your email to verify your account.");
-            navigate('/login'); // Redirect to login page
-        } catch (err) {
-            console.error('Registration error:', err);
-            const errorMessage = err.response?.data?.message || "Registration failed. Please try again.";
-            setError(errorMessage); // Keep inline error for accessibility
-            toast.error(errorMessage);
-        } finally {
-            setIsLoading(false);
+
+        const result = await register({
+            firstName: formData.firstName,
+            lastName: formData.lastName,
+            email: formData.email,
+            password: formData.password,
+            termsAccepted: formData.terms
+        });
+
+        if (result.success) {
+            navigate('/login');
+        } else {
+            setError(result.error);
         }
+        
+        setIsLoading(false);
     };
 
     return (

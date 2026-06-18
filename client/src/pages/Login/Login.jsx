@@ -7,8 +7,8 @@ import OAuthButton from '../../components/ui/OAuthButton';
 import GoogleIcon from '../../components/ui/icons/GoogleIcon';
 import GitHubIcon from '../../components/ui/icons/GitHubIcon';
 import { useForm } from '../../hooks/useForm';
-import { authService } from '../../services/authService';
 import { toast } from 'sonner';
+import { useAuth } from '../../context/AuthContext';
 
 const Login = () => {
     const navigate = useNavigate();
@@ -21,27 +21,26 @@ const Login = () => {
         password: '',
     });
 
+    const { login } = useAuth();
+
     // Form submission handler
     const handleSubmit = async (e) => {
         e.preventDefault(); // Prevents the browser from refreshing the page
         setError('');
         setIsLoading(true);
 
-        try {
-            const response = await authService.login({
-                email: formData.email,
-                password: formData.password
-            });
-            toast.success(response.message || "Login successful!");
+        const result = await login({
+            email: formData.email,
+            password: formData.password
+        });
+
+        if (result.success) {
             navigate('/dashboard');
-        } catch (err) {
-            console.error('Login error:', err);
-            const errorMessage = err.response?.data?.message || "Login failed. Please try again.";
-            setError(errorMessage);
-            toast.error(errorMessage);
-        } finally {
-            setIsLoading(false);
+        } else {
+            setError(result.error);
         }
+        
+        setIsLoading(false);
     };
 
     return (

@@ -1,17 +1,41 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { toast } from 'sonner';
+import { urlService } from '../../services/urlService';
 import CreateLinkForm from './components/CreateLinkForm';
 import CreateLinkSuccess from './components/CreateLinkSuccess';
 
 const CreateLink = () => {
     const [successState, setSuccessState] = useState(false);
     const [generatedLink, setGeneratedLink] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
 
-    const handleGenerate = (formData) => {
-        // Here you would typically make an API call to create the link
-        const finalAlias = formData.alias || Math.random().toString(36).substring(2, 8);
-        setGeneratedLink(`linksnap.io/${finalAlias}`);
-        setSuccessState(true);
+    const handleGenerate = async (formData) => {
+        setIsLoading(true);
+        try {
+            const response = await urlService.shortenUrl({
+                longUrl: formData.url,
+                shortUrl: formData.alias || undefined
+            });
+            
+            if (response.success) {
+                // For local development, point directly to the backend root (port 5000)
+                // In production, this would be your production domain
+                let baseUrl = 'http://localhost:5000';
+                if (import.meta.env.VITE_API_URL) {
+                    baseUrl = import.meta.env.VITE_API_URL.replace('/api/v1', '');
+                }
+                const shortCode = response.data.shortUrl;
+                const fullShortUrl = `${baseUrl}/${shortCode}`;
+                
+                setGeneratedLink(fullShortUrl);
+                setSuccessState(true);
+            }
+        } catch (error) {
+            toast.error(error.response?.data?.message || 'Failed to generate link');
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     const resetForm = () => {
@@ -30,7 +54,7 @@ const CreateLink = () => {
                         <p className="text-body-md font-body-md text-on-surface-variant">Transform your long URL into a trackable, manageable short link.</p>
                     </div>
 
-                    <CreateLinkForm onSubmit={handleGenerate} />
+                    <CreateLinkForm onSubmit={handleGenerate} isLoading={isLoading} />
                 </div>
             ) : (
                 <CreateLinkSuccess generatedLink={generatedLink} onReset={resetForm} />

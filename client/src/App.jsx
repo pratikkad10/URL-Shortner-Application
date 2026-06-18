@@ -12,34 +12,38 @@ import CreateLink from './pages/Links/CreateLink';
 import Analytics from './pages/Analytics/Analytics';
 import Settings from './pages/Settings/Settings';
 
+import { AuthProvider } from './context/AuthContext';
+
 function App() {
   return (
     <>
       <Toaster richColors position="top-right" />
       <BrowserRouter>
-        <Routes>
-        {/* Public Routes with Navbar/Footer */}
-        <Route element={<MainLayout />}>
-          <Route path="/" element={<Home />} />
-          {/* Add more public routes like /pricing, /about here */}
-        </Route>
+        <AuthProvider>
+          <Routes>
+            {/* Public Routes with Navbar/Footer */}
+            <Route element={<MainLayout />}>
+              <Route path="/" element={<Home />} />
+              {/* Add more public routes like /pricing, /about here */}
+            </Route>
 
-        {/* Auth Routes */}
-        <Route element={<AuthLayout />}>
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-        </Route>
+            {/* Auth Routes */}
+            <Route element={<AuthLayout />}>
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
+            </Route>
 
-        {/* Protected Routes (Dashboard) */}
-        <Route element={<DashboardLayout />}>
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/links" element={<Links />} />
-          <Route path="/links/create" element={<CreateLink />} />
-          <Route path="/analytics" element={<Analytics />} />
-          <Route path="/settings" element={<Settings />} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
+            {/* Protected Routes (Dashboard) */}
+            <Route element={<DashboardLayout />}>
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/links" element={<Links />} />
+              <Route path="/links/create" element={<CreateLink />} />
+              <Route path="/analytics" element={<Analytics />} />
+              <Route path="/settings" element={<Settings />} />
+            </Route>
+          </Routes>
+        </AuthProvider>
+      </BrowserRouter>
     </>
   );
 }

@@ -1,7 +1,19 @@
 import React from 'react';
-import { Outlet, Link } from 'react-router-dom';
+import { Outlet, Link, Navigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
+import Loader from '../components/common/Loader';
 
 const AuthLayout = () => {
+    const { user, loading } = useAuth();
+
+    if (loading) {
+        return <Loader fullScreen />;
+    }
+
+    if (user) {
+        return <Navigate to="/dashboard" replace />;
+    }
+
     return (
         <div className="bg-background text-on-surface min-h-screen flex flex-col antialiased">
             {/* Main Content Canvas */}

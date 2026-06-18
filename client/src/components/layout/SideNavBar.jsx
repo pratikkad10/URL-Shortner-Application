@@ -1,15 +1,25 @@
 import React from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext';
 import Button from '../ui/Button';
 
-const NavItem = ({ label, icon, path }) => {
+const NavItem = ({ label, icon, path, onClick }) => {
     const location = useLocation();
-    const isActive = location.pathname === path;
+    const isActive = path ? location.pathname === path : false;
     
-    const baseClasses = "flex items-center gap-3 px-4 py-2 rounded-lg text-label-md font-label-md transition-all duration-200";
+    const baseClasses = "flex items-center gap-3 px-4 py-2 rounded-lg text-label-md font-label-md transition-all duration-200 cursor-pointer w-full text-left";
     const activeClasses = isActive 
         ? "bg-primary-container text-on-primary shadow-sm"
         : "text-on-surface-variant hover:bg-surface-container hover:text-on-surface";
+
+    if (onClick) {
+        return (
+            <button className={`${baseClasses} ${activeClasses}`} onClick={onClick}>
+                <span className="material-symbols-outlined">{icon}</span>
+                {label}
+            </button>
+        );
+    }
 
     return (
         <Link className={`${baseClasses} ${activeClasses}`} to={path}>
@@ -21,6 +31,7 @@ const NavItem = ({ label, icon, path }) => {
 
 const SideNavBar = () => {
     const navigate = useNavigate();
+    const { logout } = useAuth();
     const mainLinks = [
         { label: 'Dashboard', icon: 'dashboard', path: '/dashboard' },
         { label: 'Links', icon: 'link', path: '/links' },
@@ -28,10 +39,12 @@ const SideNavBar = () => {
         { label: 'Settings', icon: 'settings', path: '/settings' }
     ];
 
-    const bottomLinks = [
-        { label: 'Support', icon: 'help', path: '/support' },
-        { label: 'Sign Out', icon: 'logout', path: '/login' }
-    ];
+    const handleLogout = async () => {
+        const result = await logout();
+        if (result.success) {
+            navigate('/login');
+        }
+    };
 
     return (
         <aside className="hidden md:flex flex-col h-full py-6 px-4 space-y-2 bg-surface-container-lowest text-on-surface fixed left-0 top-0 w-[240px] border-r border-outline-variant z-40">
@@ -54,9 +67,8 @@ const SideNavBar = () => {
             </nav>
             
             <div className="mt-auto space-y-1 border-t border-outline-variant pt-4">
-                {bottomLinks.map((link, idx) => (
-                    <NavItem key={idx} {...link} />
-                ))}
+                <NavItem label="Support" icon="help" path="/support" />
+                <NavItem label="Sign Out" icon="logout" onClick={handleLogout} />
             </div>
         </aside>
     );

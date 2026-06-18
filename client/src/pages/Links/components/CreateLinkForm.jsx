@@ -5,7 +5,7 @@ import Input from '../../../components/ui/Input';
 import Button from '../../../components/ui/Button';
 import { useForm } from '../../../hooks/useForm';
 
-const CreateLinkForm = ({ onSubmit }) => {
+const CreateLinkForm = ({ onSubmit, isLoading }) => {
     const navigate = useNavigate();
     const [showAdvanced, setShowAdvanced] = useState(false);
 
@@ -130,9 +130,9 @@ const CreateLinkForm = ({ onSubmit }) => {
             )}
 
             <div className="pt-6 border-t border-outline-variant flex justify-end gap-3 mt-8">
-                <Button type="submit" className="gap-xs shadow-sm">
-                    Generate Link
-                    <span className="material-symbols-outlined text-[18px]">arrow_forward</span>
+                <Button type="submit" className="gap-xs shadow-sm" disabled={isLoading}>
+                    {isLoading ? "Generating..." : "Generate Link"}
+                    {!isLoading && <span className="material-symbols-outlined text-[18px]">arrow_forward</span>}
                 </Button>
             </div>
         </form>
