@@ -1,10 +1,11 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import IconButton from '../ui/IconButton';
 
 const TopNavBar = () => {
     return (
         <nav className="md:hidden w-full h-16 bg-surface-container-lowest/80 backdrop-blur-md text-on-surface border-b border-outline-variant docked full-width top-0 sticky z-50 flex justify-between items-center px-gutter mx-auto">
-            <div className="text-headline-md font-headline-md font-bold text-on-surface">LinkSnap</div>
+            <Link to="/" className="text-headline-md font-headline-md font-bold text-on-surface hover:opacity-80 transition-opacity">LinkSnap</Link>
             <div className="flex items-center gap-2">
                 <IconButton icon="search" className="text-on-surface" />
                 <div className="relative">

@@ -8,7 +8,7 @@ import { useForm } from '../../../hooks/useForm';
 const CreateLinkForm = ({ onSubmit }) => {
     const navigate = useNavigate();
     const [showAdvanced, setShowAdvanced] = useState(false);
-    
+
     const { formData, handleChange } = useForm({
         url: '',
         alias: '',
@@ -130,7 +130,6 @@ const CreateLinkForm = ({ onSubmit }) => {
             )}
 
             <div className="pt-6 border-t border-outline-variant flex justify-end gap-3 mt-8">
-                <Button variant="outline" type="button" onClick={() => navigate(-1)}>Cancel</Button>
                 <Button type="submit" className="gap-xs shadow-sm">
                     Generate Link
                     <span className="material-symbols-outlined text-[18px]">arrow_forward</span>

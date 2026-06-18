@@ -35,13 +35,13 @@ const SideNavBar = () => {
 
     return (
         <aside className="hidden md:flex flex-col h-full py-6 px-4 space-y-2 bg-surface-container-lowest text-on-surface fixed left-0 top-0 w-[240px] border-r border-outline-variant z-40">
-            <div className="mb-8 px-4 flex items-center gap-3">
+            <Link to="/" className="mb-8 px-4 flex items-center gap-3 hover:opacity-80 transition-opacity">
                 <div className="w-8 h-8 rounded-lg bg-primary-container text-on-primary flex items-center justify-center font-bold">LS</div>
                 <div>
                     <h1 className="text-headline-sm font-headline-sm font-bold text-on-surface">LinkSnap</h1>
                     <p className="text-label-sm font-label-sm text-on-surface-variant">Enterprise Plan</p>
                 </div>
-            </div>
+            </Link>
             <Button className="w-full mb-6 gap-2" onClick={() => navigate('/links/create')}>
                 <span className="material-symbols-outlined text-[20px]">add</span>
                 Create New Link

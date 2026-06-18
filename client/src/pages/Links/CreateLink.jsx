@@ -21,13 +21,6 @@ const CreateLink = () => {
 
     return (
         <div className="p-4 md:p-8 max-w-container-max mx-auto w-full flex-1 flex flex-col items-center justify-center">
-            <div className="w-full max-w-[640px] mb-6 flex justify-start items-center relative z-10">
-                <Link to="/links" className="flex items-center text-on-surface-variant hover:text-primary transition-colors text-label-md font-label-md gap-2">
-                    <span className="material-symbols-outlined text-[20px]">arrow_back</span>
-                    Back to Links
-                </Link>
-            </div>
-
             {!successState ? (
                 <div className="w-full max-w-[640px] bg-surface-container-lowest border border-surface-variant rounded-xl p-8 shadow-[0_4px_6px_-1px_rgb(0_0_0/0.05),0_2px_4px_-2px_rgb(0_0_0/0.05)] relative overflow-hidden z-10">
                     <div className="absolute top-0 left-0 w-full h-1 bg-linear-to-r from-primary to-secondary"></div>
