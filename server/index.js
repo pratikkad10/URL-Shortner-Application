@@ -4,10 +4,12 @@ import 'dotenv/config';
 import userRoutes from "./routes/user.routes.js";
 import urlRoutes from "./routes/url.routes.js";
 import { authMiddleware } from './middleware/auth.middleware.js';
+import cookieParser from 'cookie-parser';
 
 const app = express();
 app.use(cors());
 app.use(express.json());
+app.use(cookieParser());
 app.use(authMiddleware);
 
 app.get("/", (req, res) => {
