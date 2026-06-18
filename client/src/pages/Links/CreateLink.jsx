@@ -17,17 +17,12 @@ const CreateLink = () => {
                 longUrl: formData.url,
                 shortUrl: formData.alias || undefined
             });
-            
+
             if (response.success) {
-                // For local development, point directly to the backend root (port 5000)
-                // In production, this would be your production domain
-                let baseUrl = 'http://localhost:5000';
-                if (import.meta.env.VITE_API_URL) {
-                    baseUrl = import.meta.env.VITE_API_URL.replace('/api/v1', '');
-                }
+                const baseUrl = import.meta.env.VITE_FRONTEND_URL || window.location.origin;
                 const shortCode = response.data.shortUrl;
                 const fullShortUrl = `${baseUrl}/${shortCode}`;
-                
+
                 setGeneratedLink(fullShortUrl);
                 setSuccessState(true);
             }
@@ -54,7 +49,7 @@ const CreateLink = () => {
                         <p className="text-body-md font-body-md text-on-surface-variant">Transform your long URL into a trackable, manageable short link.</p>
                     </div>
 
-                    <CreateLinkForm onSubmit={handleGenerate} isLoading={isLoading} />
+                    <CreateLinkForm onSubmit={handleGenerate} />
                 </div>
             ) : (
                 <CreateLinkSuccess generatedLink={generatedLink} onReset={resetForm} />
