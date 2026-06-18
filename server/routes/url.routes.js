@@ -14,6 +14,5 @@ router.post("/shorten", ensureAuthMiddleware, shortenController);
 router.get("/codes", ensureAuthMiddleware, getCodesController);
 router.put("/update/:id", ensureAuthMiddleware, updateUrlController);
 router.delete("/delete/:shortUrl", ensureAuthMiddleware, deleteCodeController);
-router.get("/:shortUrl", redirectController);
 
 export default router;
