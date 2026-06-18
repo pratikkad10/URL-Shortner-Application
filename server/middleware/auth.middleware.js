@@ -1,7 +1,7 @@
 import { verifyUserToken } from "../utils/token.js";
 
 export const authMiddleware = async (req, res, next) => {
-    const token = req.cookies.token;
+    const token = req.cookies?.token;
 
     if (!token) return next();
 
