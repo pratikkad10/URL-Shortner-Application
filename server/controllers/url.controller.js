@@ -1,4 +1,4 @@
-import { createUrl, deleteUrlByShortUrl, findUrlById, findUrlByShortUrl, findUrlsByUserId, updateUrl } from "../services/url.services.js";
+import { createUrl, deleteUrlByShortUrl, findUrlById, findUrlByShortUrl, findUrlsByUserId, updateUrl, logClick } from "../services/url.services.js";
 import { generateShortId } from "../utils/nanoid.js";
 import { urlShortenSchema } from "../validations/request.validation.js";
 
@@ -48,6 +48,10 @@ export const redirectController = async (req, res) => {
     if (!url) {
         return res.status(404).json({ success: false, message: `${shortUrl} not found` });
     }
+    
+    // Fire and forget: log the click asynchronously so it doesn't block the redirect
+    logClick(url.id, req.ip, req.get('Referer') || null, req.headers['user-agent'] || null)
+        .catch(err => console.error('Failed to log click:', err));
 
     return res.redirect(url.longUrl);
 }

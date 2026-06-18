@@ -1,5 +1,5 @@
 import db from "../db/index.js";
-import { urlsTable } from "../models/index.js";
+import { urlsTable, clicksTable } from "../models/index.js";
 import { and, eq } from "drizzle-orm";
 
 export async function createUrl(shortUrl, longUrl, userId) {
@@ -46,4 +46,14 @@ export async function findUrlById(id, userId) {
         eq(urlsTable.userId, userId)
     ));
     return url;
+}
+
+export async function logClick(urlId, ipAddress, referrer, device) {
+    const [response] = await db.insert(clicksTable).values({
+        urlId,
+        ipAddress,
+        referrer,
+        device
+    }).returning();
+    return response;
 }
