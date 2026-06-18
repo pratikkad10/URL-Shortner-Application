@@ -16,3 +16,18 @@ export const urlShortenSchema = z.object({
     longUrl: z.string().url("Invalid URL"),
     shortUrl: z.string().optional(),
 });
+
+export const resetPasswordSchema = z.object({
+    oldPassword: z.string().min(8, "Password must be at least 8 characters long"),
+    newPassword: z.string().min(8, "Password must be at least 8 characters long"),
+});
+
+export const forgotPasswordSchema = z.object({
+    email: z.string().email("Invalid email address"),
+});
+
+export const resetPasswordWithOtpSchema = z.object({
+    email: z.string().email("Invalid email address"),
+    otp: z.string().length(6, "OTP must be exactly 6 digits"),
+    newPassword: z.string().min(8, "Password must be at least 8 characters long"),
+});
