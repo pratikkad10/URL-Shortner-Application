@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import Button from '../ui/Button';
 import Input from '../ui/Input';
 import IconButton from '../ui/IconButton';
@@ -27,9 +28,9 @@ const Navbar = () => {
         <header className="bg-surface/80 backdrop-blur-md docked full-width top-0 sticky z-50 border-b border-outline-variant flat no shadows">
             <div className="flex justify-between items-center w-full px-6 max-w-7xl mx-auto h-16">
                 <div className="flex items-center gap-6">
-                    <div className="text-headline-md font-headline-md font-bold text-primary">
+                    <Link to="/" className="text-headline-md font-headline-md font-bold text-primary hover:opacity-80 transition-opacity">
                         LinkSnap
-                    </div>
+                    </Link>
                     {/* Search (Left) - Hidden on mobile for simplicity */}
                     <div className="hidden md:flex items-center text-on-surface-variant">
                         <Input 
@@ -43,9 +44,9 @@ const Navbar = () => {
                     </div>
                 </div>
                 <nav className="hidden md:flex items-center gap-6">
-                    <a className="text-primary font-bold border-b-2 border-primary pb-1 text-label-md font-label-md hover:text-primary transition-colors duration-200 opacity-80" href="#">Features</a>
-                    <a className="text-on-surface-variant pb-1 text-label-md font-label-md hover:text-primary transition-colors duration-200" href="#">Pricing</a>
-                    <a className="text-on-surface-variant pb-1 text-label-md font-label-md hover:text-primary transition-colors duration-200" href="#">Resources</a>
+                    <Link to="/" className="text-primary font-bold border-b-2 border-primary pb-1 text-label-md font-label-md hover:text-primary transition-colors duration-200 opacity-80">Features</Link>
+                    <Link to="/pricing" className="text-on-surface-variant pb-1 text-label-md font-label-md hover:text-primary transition-colors duration-200">Pricing</Link>
+                    <Link to="/resources" className="text-on-surface-variant pb-1 text-label-md font-label-md hover:text-primary transition-colors duration-200">Resources</Link>
                 </nav>
                 <div className="flex items-center gap-6">
                     <div className="flex items-center gap-2 text-on-surface-variant">
@@ -57,8 +58,8 @@ const Navbar = () => {
                         <IconButton icon="notifications" />
                     </div>
                     <div className="hidden md:flex items-center gap-4">
-                        <Button variant="ghost" className="text-on-surface">Log in</Button>
-                        <Button variant="primary" size="sm">Sign up</Button>
+                        <Link to="/login"><Button variant="ghost" className="text-on-surface">Log in</Button></Link>
+                        <Link to="/register"><Button variant="primary" size="sm">Sign up</Button></Link>
                     </div>
                     {/* Mobile Menu Toggle */}
                     <div className="md:hidden">
