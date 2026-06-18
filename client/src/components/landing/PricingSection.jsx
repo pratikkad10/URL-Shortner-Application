@@ -45,7 +45,7 @@ const PricingSection = () => {
     ];
 
     return (
-        <section className="px-6 py-16 max-w-7xl mx-auto">
+        <section id="pricing" className="px-6 py-16 max-w-7xl mx-auto">
             <div className="text-center mb-12">
                 <h2 className="text-headline-lg font-headline-lg text-on-surface mb-2">Transparent Pricing</h2>
                 <p className="text-body-md font-body-md text-on-surface-variant">Scale your link management as your team grows.</p>

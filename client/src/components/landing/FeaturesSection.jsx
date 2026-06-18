@@ -4,7 +4,7 @@ import MockLinkVisual from './MockLinkVisual';
 
 const FeaturesSection = () => {
     return (
-        <section className="px-6 py-16 bg-surface-container-low border-y border-outline-variant">
+        <section id="features" className="px-6 py-16 bg-surface-container-low border-y border-outline-variant">
             <div className="max-w-7xl mx-auto">
                 <div className="text-center mb-12">
                     <h2 className="text-headline-lg font-headline-lg text-on-surface mb-2">Everything you need to master your links</h2>

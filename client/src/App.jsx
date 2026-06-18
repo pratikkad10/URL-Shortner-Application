@@ -11,13 +11,10 @@ import Links from './pages/Links/Links';
 import CreateLink from './pages/Links/CreateLink';
 import Analytics from './pages/Analytics/Analytics';
 import Settings from './pages/Settings/Settings';
-
 import Privacy from './pages/Public/Privacy';
 import Terms from './pages/Public/Terms';
 import Status from './pages/Public/Status';
 import Contact from './pages/Public/Contact';
-
-import Pricing from './pages/Public/Pricing';
 
 import { AuthProvider } from './context/AuthContext';
 
@@ -31,7 +28,6 @@ function App() {
             {/* Public Routes with Navbar/Footer */}
             <Route element={<MainLayout />}>
               <Route path="/" element={<Home />} />
-              <Route path="/pricing" element={<Pricing />} />
               <Route path="/privacy" element={<Privacy />} />
               <Route path="/terms" element={<Terms />} />
               <Route path="/status" element={<Status />} />
