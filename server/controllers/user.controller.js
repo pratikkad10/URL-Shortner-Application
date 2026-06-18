@@ -13,7 +13,7 @@ export const registerUser = async (req, res) => {
         return res.status(400).json({ success: false, message: "Validation failed", errors: validation.error.message });
     }
 
-    const { firstName, lastName, email, password } = validation.data;
+    const { firstName, lastName, email, password, termsAccepted } = validation.data;
 
     try {
         const existingUser = await getUserByEmail(email);
@@ -26,7 +26,7 @@ export const registerUser = async (req, res) => {
 
         const verificationToken = nanoid(32);
 
-        const user = await createUser(firstName, lastName, email, hashedPassword, verificationToken);
+        const user = await createUser(firstName, lastName, email, hashedPassword, verificationToken, termsAccepted);
 
         const verificationLink = `${process.env.FRONTEND_URL}/verify?token=${verificationToken}`;
 

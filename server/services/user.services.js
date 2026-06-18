@@ -44,13 +44,14 @@ export async function getUserById(userId, { includePassword = true } = {}) {
 }
 
 
-export async function createUser(firstName, lastName, email, hashedPassword, verificationToken) {
+export async function createUser(firstName, lastName, email, hashedPassword, verificationToken, termsAccepted) {
     const [user] = await db.insert(usersTable).values({
         firstName,
         lastName,
         email,
         password: hashedPassword,
         verificationToken,
+        termsAccepted,
     }).returning({ id: usersTable.id });
 
     return user;
