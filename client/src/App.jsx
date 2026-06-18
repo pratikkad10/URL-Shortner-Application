@@ -8,6 +8,7 @@ import Login from './pages/Login/Login';
 import Register from './pages/Register/Register';
 import Dashboard from './pages/Dashboard/Dashboard';
 import Links from './pages/Links/Links';
+import CreateLink from './pages/Links/CreateLink';
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
         <Route element={<DashboardLayout />}>
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/links" element={<Links />} />
+          <Route path="/links/create" element={<CreateLink />} />
         </Route>
       </Routes>
     </BrowserRouter>

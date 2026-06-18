@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Button from '../ui/Button';
 
 const NavItem = ({ label, icon, path }) => {
@@ -20,6 +20,7 @@ const NavItem = ({ label, icon, path }) => {
 };
 
 const SideNavBar = () => {
+    const navigate = useNavigate();
     const mainLinks = [
         { label: 'Dashboard', icon: 'dashboard', path: '/dashboard' },
         { label: 'Links', icon: 'link', path: '/links' },
@@ -41,7 +42,7 @@ const SideNavBar = () => {
                     <p className="text-label-sm font-label-sm text-on-surface-variant">Enterprise Plan</p>
                 </div>
             </div>
-            <Button className="w-full mb-6 gap-2">
+            <Button className="w-full mb-6 gap-2" onClick={() => navigate('/links/create')}>
                 <span className="material-symbols-outlined text-[20px]">add</span>
                 Create New Link
             </Button>

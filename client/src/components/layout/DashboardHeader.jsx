@@ -9,6 +9,8 @@ const getPageTitle = (pathname) => {
             return 'Overview';
         case '/links':
             return 'Manage Links';
+        case '/links/create':
+            return 'Create New Link';
         case '/analytics':
             return 'Analytics';
         case '/settings':
