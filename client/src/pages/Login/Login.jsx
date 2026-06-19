@@ -91,7 +91,7 @@ const Login = () => {
                         onChange={handleChange}
                     />
                     <div className="text-sm">
-                        <Link className="font-label-sm text-label-sm text-primary hover:text-primary-container transition-colors" to="#">
+                        <Link className="font-label-sm text-label-sm text-primary hover:text-primary-container transition-colors" to="/forgot-password">
                             Forgot password?
                         </Link>
                     </div>

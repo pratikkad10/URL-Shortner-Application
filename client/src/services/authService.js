@@ -24,5 +24,13 @@ export const authService = {
     updateProfile: async (profileData) => {
         const response = await api.put('/user/profile', profileData);
         return response.data;
+    },
+    forgotPassword: async (email) => {
+        const response = await api.post('/user/forgot-password', { email });
+        return response.data;
+    },
+    resetPasswordWithOtp: async (data) => {
+        const response = await api.post('/user/reset-password-with-otp', data);
+        return response.data;
     }
 };

@@ -16,6 +16,8 @@ import Terms from './pages/Public/Terms';
 import Status from './pages/Public/Status';
 import Contact from './pages/Public/Contact';
 
+import ForgotPassword from './pages/ForgotPassword/ForgotPassword';
+
 import { AuthProvider } from './context/AuthContext';
 
 function App() {
@@ -38,6 +40,7 @@ function App() {
             <Route element={<AuthLayout />}>
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
+              <Route path="/forgot-password" element={<ForgotPassword />} />
             </Route>
 
             {/* Protected Routes (Dashboard) */}
