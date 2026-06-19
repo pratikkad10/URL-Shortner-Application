@@ -108,10 +108,10 @@ const PricingSection = () => {
     }
 
     return (
-        <section id="pricing" className="px-6 py-16 max-w-7xl mx-auto">
-            <div className="text-center mb-12">
-                <h2 className="text-headline-lg font-headline-lg text-on-surface mb-2">Transparent Pricing</h2>
-                <p className="text-body-md font-body-md text-on-surface-variant">Scale your link management as your team grows.</p>
+        <section id="pricing" className="px-6 py-12 md:py-16 max-w-7xl mx-auto">
+            <div className="text-center mb-10 md:mb-12">
+                <h2 className="text-headline-md md:text-headline-lg font-headline-md md:font-headline-lg text-on-surface mb-3 md:mb-2">Transparent Pricing</h2>
+                <p className="text-body-sm md:text-body-md font-body-sm md:font-body-md text-on-surface-variant">Scale your link management as your team grows.</p>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-4 lg:gap-6 mt-8">
                 {plans.map((plan, index) => (

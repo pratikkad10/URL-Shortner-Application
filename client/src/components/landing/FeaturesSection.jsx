@@ -4,11 +4,11 @@ import MockLinkVisual from './MockLinkVisual';
 
 const FeaturesSection = () => {
     return (
-        <section id="features" className="px-6 py-16 bg-surface-container-low border-y border-outline-variant">
+        <section id="features" className="px-6 py-12 md:py-16 bg-surface-container-low border-y border-outline-variant">
             <div className="max-w-7xl mx-auto">
-                <div className="text-center mb-12">
-                    <h2 className="text-headline-lg font-headline-lg text-on-surface mb-2">Everything you need to master your links</h2>
-                    <p className="text-body-md font-body-md text-on-surface-variant max-w-2xl mx-auto">A powerful, intuitive platform to shorten, customize, and manage your URLs effortlessly.</p>
+                <div className="text-center mb-10 md:mb-12">
+                    <h2 className="text-headline-md md:text-headline-lg font-headline-md md:font-headline-lg text-on-surface mb-3 md:mb-2">Everything you need to master your links</h2>
+                    <p className="text-body-sm md:text-body-md font-body-sm md:font-body-md text-on-surface-variant max-w-2xl mx-auto px-4 md:px-0">A powerful, intuitive platform to shorten, customize, and manage your URLs effortlessly.</p>
                 </div>
                 <div className="bento-grid">
                     {/* Feature 1: Custom Aliases */}
