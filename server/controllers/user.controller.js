@@ -1,5 +1,5 @@
 import { createUser, getUserByEmail, updateUser, getUserById, getUserByVerificationToken } from "../services/user.services.js";
-import { userRegistrationSchema, userLoginSchema, resetPasswordSchema, forgotPasswordSchema, resetPasswordWithOtpSchema } from "../validations/request.validation.js";
+import { userRegistrationSchema, userLoginSchema, resetPasswordSchema, forgotPasswordSchema, resetPasswordWithOtpSchema, updateProfileSchema } from "../validations/request.validation.js";
 import { comparePassword, hashPassword } from "../utils/hash.js";
 import { generateUserToken } from "../utils/token.js";
 import { sendVerificationEmail, sendPasswordResetOtpEmail } from "../services/mail.service.js";
@@ -247,6 +247,31 @@ export const resetPasswordWithOtp = async (req, res) => {
         res.status(200).json({ success: true, message: "Password reset successfully" });
     } catch (error) {
         console.log("Error in reset password with OTP controller:", error);
+        res.status(500).json({ success: false, message: "Internal server error" });
+    }
+};
+
+export const updateProfile = async (req, res) => {
+    try {
+        const userId = req.user.id;
+        const validation = await updateProfileSchema.safeParseAsync(req.body);
+
+        if (!validation.success) {
+            return res.status(400).json({ success: false, message: "Validation failed", errors: validation.error.message });
+        }
+
+        // validation.data only contains firstName and lastName because Zod strips unrecognised keys by default.
+        // The email field is entirely ignored by the schema and cannot be updated.
+        const updatedUser = await updateUser(userId, validation.data);
+
+        if (!updatedUser) {
+            return res.status(404).json({ success: false, message: "User not found" });
+        }
+
+        const { password, ...safeUser } = updatedUser;
+        res.status(200).json({ success: true, data: safeUser, message: "Profile updated successfully" });
+    } catch (error) {
+        console.log("Error in update profile controller:", error);
         res.status(500).json({ success: false, message: "Internal server error" });
     }
 };

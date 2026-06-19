@@ -42,10 +42,7 @@ const DashboardHeader = () => {
                         containerClassName="h-10 rounded-lg border border-outline-variant focus-within:border-primary focus-within:ring-2 focus-within:ring-primary/20 bg-surface transition-all"
                     />
                 </div>
-                <div className="relative">
-                    <IconButton icon="notifications" />
-                    <span className="absolute top-1 right-1 w-2 h-2 bg-error rounded-full border border-surface pointer-events-none"></span>
-                </div>
+
                 <TierBadge tier={user?.tier} />
             </div>
         </header>

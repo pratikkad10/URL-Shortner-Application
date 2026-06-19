@@ -7,7 +7,8 @@ import {
     resetPassword,
     verifyEmail,
     forgotPassword,
-    resetPasswordWithOtp
+    resetPasswordWithOtp,
+    updateProfile
 } from "../controllers/user.controller.js";
 import { authMiddleware, ensureAuthMiddleware } from "../middleware/auth.middleware.js";
 
@@ -24,5 +25,6 @@ router.post("/reset-password-with-otp", resetPasswordWithOtp);
 router.post("/logout", authMiddleware, ensureAuthMiddleware, logoutUser);
 router.get("/me", authMiddleware, ensureAuthMiddleware, getCurrentUser);
 router.post("/reset-password", authMiddleware, ensureAuthMiddleware, resetPassword);
+router.put("/profile", authMiddleware, ensureAuthMiddleware, updateProfile);
 
 export default router;

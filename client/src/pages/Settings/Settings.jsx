@@ -1,13 +1,10 @@
 import React from 'react';
 import ProfileSection from './components/ProfileSection';
 import SecuritySection from './components/SecuritySection';
-import ApiSection from './components/ApiSection';
 
 const navItems = [
     { id: 'profile', label: 'Profile', active: true },
     { id: 'security', label: 'Security', active: false },
-    { id: 'notifications', label: 'Notifications', active: false },
-    { id: 'api', label: 'API & Integrations', active: false },
     { id: 'team', label: 'Team', active: false },
 ];
 
@@ -39,7 +36,6 @@ const Settings = () => {
                 <div className="flex-1 max-w-3xl space-y-8 pb-16">
                     <ProfileSection />
                     <SecuritySection />
-                    <ApiSection />
                 </div>
             </div>
         </div>

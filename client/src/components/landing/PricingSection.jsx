@@ -101,9 +101,6 @@ const PricingSection = () => {
                         <Button variant="primary" onClick={() => navigate('/dashboard')} className="min-w-[200px] justify-center">
                             Go to Dashboard
                         </Button>
-                        <Button variant="outline" onClick={() => navigate('/settings')} className="min-w-[200px] justify-center">
-                            Manage Subscription
-                        </Button>
                     </div>
                 </div>
             </section>
