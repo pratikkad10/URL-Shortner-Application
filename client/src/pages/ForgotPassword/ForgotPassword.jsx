@@ -117,7 +117,7 @@ const ForgotPassword = () => {
     return (
         <>
             <div className="text-center mb-8">
-                <h1 className="font-headline-md text-headline-md text-on-surface mb-1">
+                <h1 className="font-headline-sm md:font-headline-md text-headline-sm md:text-headline-md text-on-surface mb-1">
                     {step === 1 && 'Reset Password'}
                     {step === 2 && 'Verify OTP'}
                     {step === 3 && 'New Password'}
@@ -158,7 +158,7 @@ const ForgotPassword = () => {
 
             {step === 2 && (
                 <form onSubmit={handleVerifyOtpStep} className="space-y-6">
-                    <div className="flex justify-center gap-3" onPaste={handleOtpPaste}>
+                    <div className="flex justify-center gap-2 sm:gap-3" onPaste={handleOtpPaste}>
                         {otp.map((digit, index) => (
                             <input
                                 key={index}
@@ -168,7 +168,7 @@ const ForgotPassword = () => {
                                 value={digit}
                                 onChange={(e) => handleOtpChange(index, e.target.value)}
                                 onKeyDown={(e) => handleOtpKeyDown(index, e)}
-                                className="w-12 h-14 text-center text-xl font-semibold bg-surface-container-lowest border border-outline-variant rounded-lg focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
+                                className="w-10 sm:w-12 h-12 sm:h-14 text-center text-lg sm:text-xl font-semibold bg-surface-container-lowest border border-outline-variant rounded-lg focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
                             />
                         ))}
                     </div>

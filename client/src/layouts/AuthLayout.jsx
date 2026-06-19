@@ -18,7 +18,7 @@ const AuthLayout = () => {
         <div className="bg-background text-on-surface min-h-screen flex flex-col antialiased">
             {/* Main Content Canvas */}
             <main className="grow flex items-center justify-center p-4 sm:p-6 w-full relative z-10">
-                <div className="w-full max-w-[420px] bg-surface-container-lowest border border-surface-variant rounded-xl p-8 shadow-[0_4px_6px_-1px_rgb(0_0_0/0.05),0_2px_4px_-2px_rgb(0_0_0/0.05)] relative overflow-hidden">
+                <div className="w-full max-w-[420px] bg-surface-container-lowest border border-surface-variant rounded-xl p-6 md:p-8 shadow-[0_4px_6px_-1px_rgb(0_0_0/0.05),0_2px_4px_-2px_rgb(0_0_0/0.05)] relative overflow-hidden">
                     {/* Decorative gradient accent */}
                     <div className="absolute top-0 left-0 w-full h-1 bg-linear-to-r from-primary to-secondary"></div>
                     <Outlet />

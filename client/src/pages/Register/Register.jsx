@@ -62,7 +62,7 @@ const Register = () => {
     return (
         <>
             <div className="text-center mb-8">
-                <h1 className="font-headline-md text-headline-md text-on-surface mb-1">Create an account</h1>
+                <h1 className="font-headline-sm md:font-headline-md text-headline-sm md:text-headline-md text-on-surface mb-1">Create an account</h1>
                 <p className="font-body-sm text-body-sm text-on-surface-variant">Create your account to get started.</p>
             </div>
             
@@ -73,7 +73,7 @@ const Register = () => {
             )}
             
             <form onSubmit={handleSubmit} className="space-y-6">
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <Input 
                         id="firstName"
                         name="firstName"

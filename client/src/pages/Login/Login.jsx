@@ -46,7 +46,7 @@ const Login = () => {
     return (
         <>
             <div className="text-center mb-8">
-                <h1 className="font-headline-md text-headline-md text-on-surface mb-1">Sign in to LinkSnap</h1>
+                <h1 className="font-headline-sm md:font-headline-md text-headline-sm md:text-headline-md text-on-surface mb-1">Sign in to LinkSnap</h1>
                 <p className="font-body-sm text-body-sm text-on-surface-variant">Welcome back! Please enter your details.</p>
             </div>
 
