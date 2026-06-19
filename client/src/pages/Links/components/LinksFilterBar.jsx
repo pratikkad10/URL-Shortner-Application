@@ -1,6 +1,3 @@
-import React from 'react';
-import Button from '../../../components/ui/Button';
-
 const LinksFilterBar = ({ page, limit, totalItems }) => {
     const filterButtonClasses = "!text-on-surface !border-outline-variant bg-surface-container-lowest hover:bg-surface-container-low !h-10 !px-4 gap-2 shadow-none font-medium";
 
