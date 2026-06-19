@@ -80,12 +80,14 @@ export async function findUrlById(id, userId) {
     return url;
 }
 
-export async function logClick(urlId, ipAddress, referrer, device) {
+export async function logClick(urlId, ipAddress, referrer, device, country, city) {
     const [response] = await db.insert(clicksTable).values({
         urlId,
         ipAddress,
         referrer,
-        device
+        device,
+        country,
+        city
     }).returning();
     return response;
 }

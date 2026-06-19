@@ -1,12 +1,74 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import DateRangeSelector from './components/DateRangeSelector';
+import React, { useState, useEffect } from 'react';
+import { Link, useParams } from 'react-router-dom';
 import ClicksChart from './components/ClicksChart';
 import DeviceBreakdown from './components/DeviceBreakdown';
 import TopCountries from './components/TopCountries';
 import TopReferrers from './components/TopReferrers';
+import { analyticsService } from '../../services/analyticsService';
+import { getShortUrlBase } from '../../utils/format';
 
 const Analytics = () => {
+    const { shortUrl } = useParams();
+    const [data, setData] = useState(null);
+    const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState(null);
+    const domain = getShortUrlBase();
+
+    useEffect(() => {
+        const fetchAnalytics = async () => {
+            if (!shortUrl) {
+                // Handle global analytics or redirect
+                setIsLoading(false);
+                return;
+            }
+
+            setIsLoading(true);
+            try {
+                // Fetch default 30 days
+                const result = await analyticsService.getLinkAnalytics(shortUrl, 30);
+                if (result.success) {
+                    setData(result.data);
+                } else {
+                    setError('Failed to fetch analytics');
+                }
+            } catch (err) {
+                console.error(err);
+                setError(err.response?.data?.message || 'Error fetching analytics');
+            } finally {
+                setIsLoading(false);
+            }
+        };
+
+        fetchAnalytics();
+    }, [shortUrl]);
+
+    if (isLoading) {
+        return (
+            <div className="p-4 md:p-8 flex items-center justify-center min-h-[400px]">
+                <div className="text-on-surface-variant">Loading analytics...</div>
+            </div>
+        );
+    }
+
+    if (error || (!data && shortUrl)) {
+        return (
+            <div className="p-4 md:p-8 flex flex-col items-center justify-center min-h-[400px]">
+                <div className="text-error mb-4">{error || 'No data found'}</div>
+                <Link to="/links" className="text-primary hover:underline">Return to Links</Link>
+            </div>
+        );
+    }
+
+    if (!shortUrl) {
+        return (
+            <div className="p-4 md:p-8 flex items-center justify-center min-h-[400px]">
+                <div className="text-on-surface-variant">Please select a link from the <Link to="/links" className="text-primary hover:underline">Links page</Link> to view its analytics.</div>
+            </div>
+        );
+    }
+
+    const { urlInfo, totalClicks, clicksOverTime, deviceBreakdown, topCountries, topReferrers } = data;
+
     return (
         <div className="p-4 md:p-8 max-w-container-max mx-auto w-full flex-1 flex flex-col">
             {/* Context & Hero */}
@@ -18,21 +80,20 @@ const Analytics = () => {
                     </Link>
                     <h2 className="text-headline-lg font-headline-lg text-on-surface flex items-center gap-3">
                         <span className="text-primary material-symbols-outlined text-[32px]">link</span>
-                        linksn.ap/summer-promo-24
+                        {domain}/{urlInfo.shortUrl}
                     </h2>
-                    <p className="text-body-md font-body-md text-on-surface-variant mt-1">Created on May 15, 2024</p>
+                    <p className="text-body-md font-body-md text-on-surface-variant mt-1">
+                        Created on {new Date(urlInfo.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+                    </p>
                 </div>
-                
-                {/* Date Range Selector */}
-                <DateRangeSelector />
             </div>
             
             {/* Bento Grid Layout */}
             <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
-                <ClicksChart />
-                <DeviceBreakdown />
-                <TopCountries />
-                <TopReferrers />
+                <ClicksChart data={clicksOverTime} totalClicks={totalClicks} />
+                <DeviceBreakdown data={deviceBreakdown} />
+                <TopCountries data={topCountries} />
+                <TopReferrers data={topReferrers} />
             </div>
         </div>
     );

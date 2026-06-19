@@ -1,8 +1,10 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import IconButton from '../../../components/ui/IconButton';
 import PlatformIcon from '../../../components/ui/PlatformIcon';
 
 const LinksTableRow = ({ link, domain, formatNumber, formatDate, handleCopy }) => {
+    const navigate = useNavigate();
     // Right now, we assume all links are active since we don't have expiration in schema
     const isExpired = false; 
     const status = 'Active';
@@ -44,7 +46,7 @@ const LinksTableRow = ({ link, domain, formatNumber, formatDate, handleCopy }) =
                     {!isExpired && (
                         <IconButton icon="content_copy" onClick={() => handleCopy(link.shortUrl)} className="p-1! hover:text-primary! [&>span]:text-[18px]!" title="Copy" />
                     )}
-                    <IconButton icon="bar_chart" className="p-1! hover:text-primary! [&>span]:text-[18px]!" title="Analytics" />
+                    <IconButton icon="bar_chart" onClick={() => navigate(`/analytics/${link.shortUrl}`)} className="p-1! hover:text-primary! [&>span]:text-[18px]!" title="Analytics" />
                     {!isExpired ? (
                         <IconButton icon="more_vert" className="p-1! hover:text-primary! [&>span]:text-[18px]!" title="More" />
                     ) : (

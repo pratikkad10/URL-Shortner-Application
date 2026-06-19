@@ -1,44 +1,75 @@
 import React from 'react';
+import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip as RechartsTooltip } from 'recharts';
 
-const DeviceBreakdown = () => {
+const COLORS = ['var(--color-primary)', 'var(--color-secondary-container)', 'var(--color-tertiary-container)', 'var(--color-surface-variant)'];
+
+const DeviceBreakdown = ({ data = [] }) => {
+    const total = data.reduce((acc, curr) => acc + curr.value, 0);
+
     return (
         <div className="col-span-1 md:col-span-6 lg:col-span-4 bg-surface-container-lowest border border-outline-variant rounded-xl p-6 shadow-sm flex flex-col">
             <h3 className="text-headline-sm font-headline-sm text-on-surface mb-6">Device Breakdown</h3>
             <div className="flex-1 flex flex-col justify-center items-center relative">
-                
-                {/* CSS Donut Chart Visualization */}
-                <div className="w-40 h-40 rounded-full relative mb-6 flex items-center justify-center" style={{ background: "conic-gradient(var(--color-primary) 0% 65%, var(--color-secondary-container) 65% 90%, var(--color-surface-variant) 90% 100%)" }}>
-                    <div className="w-28 h-28 bg-surface-container-lowest rounded-full absolute"></div>
-                    <div className="relative z-10 text-center">
-                        <span className="block text-headline-sm font-headline-sm text-on-surface">65%</span>
-                        <span className="block text-label-sm font-label-sm text-on-surface-variant">Mobile</span>
-                    </div>
-                </div>
-                
-                {/* Legend */}
-                <div className="w-full space-y-3 mt-auto">
-                    <div className="flex justify-between items-center text-body-sm font-body-sm">
-                        <div className="flex items-center gap-2">
-                            <div className="w-3 h-3 rounded-full bg-primary"></div>
-                            <span className="text-on-surface">Mobile</span>
+                {data.length > 0 ? (
+                    <>
+                        <div className="w-full h-48 relative mb-4">
+                            <ResponsiveContainer width="100%" height="100%">
+                                <PieChart>
+                                    <Pie
+                                        data={data}
+                                        cx="50%"
+                                        cy="50%"
+                                        innerRadius={60}
+                                        outerRadius={80}
+                                        paddingAngle={2}
+                                        dataKey="value"
+                                        stroke="none"
+                                    >
+                                        {data.map((entry, index) => (
+                                            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                                        ))}
+                                    </Pie>
+                                    <RechartsTooltip 
+                                        contentStyle={{ 
+                                            backgroundColor: 'var(--color-surface-container-high)', 
+                                            borderColor: 'var(--color-outline-variant)',
+                                            borderRadius: '8px',
+                                            color: 'var(--color-on-surface)'
+                                        }}
+                                        itemStyle={{ color: 'var(--color-primary)' }}
+                                    />
+                                </PieChart>
+                            </ResponsiveContainer>
+                            <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                                <div className="text-center">
+                                    <span className="block text-headline-sm font-headline-sm text-on-surface">
+                                        {data[0] ? Math.round((data[0].value / total) * 100) : 0}%
+                                    </span>
+                                    <span className="block text-label-sm font-label-sm text-on-surface-variant max-w-[80px] truncate mx-auto">
+                                        {data[0] ? data[0].name : ''}
+                                    </span>
+                                </div>
+                            </div>
                         </div>
-                        <span className="font-medium">80,984</span>
-                    </div>
-                    <div className="flex justify-between items-center text-body-sm font-body-sm">
-                        <div className="flex items-center gap-2">
-                            <div className="w-3 h-3 rounded-full bg-secondary-container"></div>
-                            <span className="text-on-surface">Desktop</span>
+
+                        {/* Legend */}
+                        <div className="w-full space-y-3 mt-auto">
+                            {data.map((item, index) => (
+                                <div key={index} className="flex justify-between items-center text-body-sm font-body-sm">
+                                    <div className="flex items-center gap-2">
+                                        <div className="w-3 h-3 rounded-full" style={{ backgroundColor: COLORS[index % COLORS.length] }}></div>
+                                        <span className="text-on-surface truncate max-w-[120px] capitalize">{item.name}</span>
+                                    </div>
+                                    <span className="font-medium">{item.value.toLocaleString()}</span>
+                                </div>
+                            ))}
                         </div>
-                        <span className="font-medium">31,148</span>
+                    </>
+                ) : (
+                    <div className="flex items-center justify-center h-full text-on-surface-variant pb-8">
+                        No device data available.
                     </div>
-                    <div className="flex justify-between items-center text-body-sm font-body-sm">
-                        <div className="flex items-center gap-2">
-                            <div className="w-3 h-3 rounded-full bg-surface-variant"></div>
-                            <span className="text-on-surface">Tablet</span>
-                        </div>
-                        <span className="font-medium">12,460</span>
-                    </div>
-                </div>
+                )}
             </div>
         </div>
     );

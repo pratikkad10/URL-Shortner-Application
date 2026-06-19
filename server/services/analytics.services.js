@@ -140,3 +140,122 @@ export async function getDashboardStats(userId) {
         recentActivity
     };
 }
+
+export async function getLinkAnalytics(shortUrl, userId, days = 30) {
+    const now = new Date();
+    const timeframeAgo = new Date(now.getTime() - days * 24 * 60 * 60 * 1000);
+
+    // 1. Verify ownership and get url info
+    const [urlInfo] = await db.select({
+        id: urlsTable.id,
+        createdAt: urlsTable.createdAt,
+        longUrl: urlsTable.longUrl
+    })
+    .from(urlsTable)
+    .where(and(eq(urlsTable.shortUrl, shortUrl), eq(urlsTable.userId, userId)));
+
+    if (!urlInfo) {
+        throw new Error("URL not found or unauthorized");
+    }
+
+    const urlId = urlInfo.id;
+
+    // 2. Get total clicks for this specific link (all-time)
+    const [totalClicksRes] = await db.select({ count: count() })
+        .from(clicksTable)
+        .where(eq(clicksTable.urlId, urlId));
+    
+    // 3. Get clicks over time for chart
+    const clicksOverTimeRaw = await db.select({
+        timestamp: clicksTable.timestamp
+    })
+    .from(clicksTable)
+    .where(and(
+        eq(clicksTable.urlId, urlId),
+        gte(clicksTable.timestamp, timeframeAgo)
+    ));
+
+    // Aggregate by date (YYYY-MM-DD)
+    const clicksByDateMap = {};
+    clicksOverTimeRaw.forEach(click => {
+        const dateStr = new Date(click.timestamp).toISOString().split('T')[0];
+        clicksByDateMap[dateStr] = (clicksByDateMap[dateStr] || 0) + 1;
+    });
+    
+    const clicksOverTime = Object.keys(clicksByDateMap).map(date => ({
+        date,
+        clicks: clicksByDateMap[date]
+    })).sort((a, b) => new Date(a.date) - new Date(b.date));
+
+    // 4. Device Breakdown
+    const deviceBreakdownRaw = await db.select({
+        device: clicksTable.device,
+        count: count()
+    })
+    .from(clicksTable)
+    .where(and(
+        eq(clicksTable.urlId, urlId),
+        gte(clicksTable.timestamp, timeframeAgo)
+    ))
+    .groupBy(clicksTable.device);
+    
+    const deviceBreakdown = deviceBreakdownRaw.map(d => ({
+        name: d.device || 'Unknown',
+        value: d.count
+    }));
+
+    // 5. Top Countries
+    const topCountriesRaw = await db.select({
+        country: clicksTable.country,
+        count: count()
+    })
+    .from(clicksTable)
+    .where(and(
+        eq(clicksTable.urlId, urlId),
+        gte(clicksTable.timestamp, timeframeAgo)
+    ))
+    .groupBy(clicksTable.country)
+    .orderBy(desc(count()))
+    .limit(5);
+
+    const topCountries = topCountriesRaw.map(c => ({
+        name: c.country && c.country !== 'Unknown' ? c.country : 'Unknown Location',
+        value: c.count
+    }));
+
+    // 6. Top Referrers
+    const topReferrersRaw = await db.select({
+        referrer: clicksTable.referrer,
+        count: count()
+    })
+    .from(clicksTable)
+    .where(and(
+        eq(clicksTable.urlId, urlId),
+        gte(clicksTable.timestamp, timeframeAgo)
+    ))
+    .groupBy(clicksTable.referrer)
+    .orderBy(desc(count()))
+    .limit(5);
+
+    const topReferrers = topReferrersRaw.map(r => {
+        let name = r.referrer;
+        if (!name) name = 'Direct';
+        else {
+            try { name = new URL(name).hostname; } catch(e) {}
+        }
+        return { name, value: r.count };
+    });
+
+    return {
+        urlInfo: {
+            shortUrl,
+            longUrl: urlInfo.longUrl,
+            createdAt: urlInfo.createdAt
+        },
+        totalClicks: totalClicksRes.count,
+        clicksOverTime,
+        deviceBreakdown,
+        topCountries,
+        topReferrers
+    };
+}

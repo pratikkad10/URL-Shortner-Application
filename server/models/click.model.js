@@ -7,5 +7,7 @@ export const clicksTable = pgTable("clicks", {
     timestamp: timestamp().defaultNow(),
     ipAddress: varchar("ip_address", { length: 255 }),
     referrer: varchar("referrer", { length: 255 }),
-    device: varchar("device", { length: 255 })
+    device: varchar("device", { length: 255 }),
+    country: varchar("country", { length: 255 }),
+    city: varchar("city", { length: 255 })
 });

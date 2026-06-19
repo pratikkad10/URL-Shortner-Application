@@ -1,6 +1,7 @@
 import { createUrl, deleteUrlByShortUrl, findUrlById, findUrlByShortUrl, findUrlsByUserId, updateUrl, logClick } from "../services/url.services.js";
 import { generateShortId } from "../utils/nanoid.js";
 import { urlShortenSchema } from "../validations/request.validation.js";
+import geoip from 'geoip-lite';
 
 export const shortenController = async (req, res) => {
     try {
@@ -49,8 +50,19 @@ export const redirectController = async (req, res) => {
         return res.status(404).json({ success: false, message: `${shortUrl} not found` });
     }
     
-    // Fire and forget: log the click asynchronously so it doesn't block the redirect
-    logClick(url.id, req.ip, req.get('Referer') || null, req.headers['user-agent'] || null)
+    let ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
+    
+    // For local testing, mock a public IP if it's a loopback address
+    if (ip === '::1' || ip === '127.0.0.1') {
+        const mockIps = ['8.8.8.8', '82.163.127.255', '212.58.246.103', '103.208.73.1']; // US, FR, GB, AU
+        ip = mockIps[Math.floor(Math.random() * mockIps.length)];
+    }
+
+    const geo = geoip.lookup(ip);
+    const country = geo ? geo.country : 'Unknown';
+    const city = geo ? geo.city : 'Unknown';
+
+    logClick(url.id, ip, req.get('Referer') || null, req.headers['user-agent'] || null, country, city)
         .catch(err => console.error('Failed to log click:', err));
 
     return res.redirect(url.longUrl);
