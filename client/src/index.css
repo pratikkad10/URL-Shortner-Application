@@ -109,54 +109,53 @@ html {
 }
 
 :root.dark {
-    /* Backgrounds */
-    --color-surface: #0b0f19;
-    --color-background: #0b0f19;
-    --color-surface-dim: #05080f;
-    --color-surface-bright: #111827;
-    
-    /* Containers */
-    --color-surface-container-lowest: #111827;
-    --color-surface-container-low: #1f2937;
-    --color-surface-container: #374151;
-    --color-surface-container-high: #4b5563;
-    --color-surface-container-highest: #6b7280;
-    --color-surface-variant: #1f2937;
-    
-    /* Text */
-    --color-on-surface: #f9fafb;
-    --color-on-background: #f9fafb;
-    --color-on-surface-variant: #9ca3af;
-    
-    /* Primary */
-    --color-primary: #60a5fa;
-    --color-primary-container: #3b82f6;
-    --color-on-primary-container: #ffffff;
-    --color-on-primary: #ffffff;
-    --color-primary-fixed: #1e3a8a;
-    --color-on-primary-fixed-variant: #bfdbfe;
-    
-    /* Secondary */
-    --color-secondary: #06b6d4;
-    --color-secondary-container: #06b6d4;
-    --color-secondary-fixed: #164e63;
-    --color-on-secondary-container: #ffffff;
-    --color-on-secondary-fixed-variant: #a5f3fc;
-    
-    /* Tertiary */
-    --color-tertiary: #64748b;
-    --color-tertiary-container: #475569;
-    --color-tertiary-fixed: #1e293b;
-    --color-on-tertiary-fixed-variant: #cbd5e1;
-    
-    /* Outlines */
-    --color-outline: #4b5563;
-    --color-outline-variant: #374151;
-    
-    /* Inverse */
-    --color-inverse-surface: #f3f4f6;
-    --color-inverse-on-surface: #111827;
-    --color-inverse-primary: #2563eb;
+    --color-on-error: #690005;
+    --color-on-secondary: #0e2b6f;
+    --color-on-secondary-fixed: #00174c;
+    --color-tertiary-fixed: #ffdbd0;
+    --color-surface-dim: #131315;
+    --color-surface-bright: #39393b;
+    --color-surface-container-highest: #353437;
+    --color-surface-container-low: #1c1b1d;
+    --color-inverse-surface: #e5e1e4;
+    --color-secondary-container: #2d458a;
+    --color-on-primary: #002979;
+    --color-on-surface: #e5e1e4;
+    --color-surface-container-high: #2a2a2c;
+    --color-on-secondary-container: #a0b6ff;
+    --color-on-primary-fixed-variant: #003da9;
+    --color-surface-variant: #353437;
+    --color-on-error-container: #ffdad6;
+    --color-primary-fixed-dim: #b4c5ff;
+    --color-surface-tint: #b4c5ff;
+    --color-on-tertiary-container: #fff1ed;
+    --color-error: #ffb4ab;
+    --color-tertiary-fixed-dim: #ffb59d;
+    --color-primary: #b4c5ff;
+    --color-secondary: #b4c5ff;
+    --color-outline: #8c90a2;
+    --color-on-tertiary-fixed-variant: #832700;
+    --color-secondary-fixed: #dbe1ff;
+    --color-on-primary-container: #f3f3ff;
+    --color-primary-fixed: #dbe1ff;
+    --color-surface-container-lowest: #0e0e10;
+    --color-tertiary-container: #c84000;
+    --color-secondary-fixed-dim: #b4c5ff;
+    --color-on-background: #e5e1e4;
+    --color-tertiary: #ffb59d;
+    --color-inverse-primary: #0052dd;
+    --color-surface-container: #201f22;
+    --color-on-tertiary-fixed: #390c00;
+    --color-error-container: #93000a;
+    --color-on-primary-fixed: #00174c;
+    --color-background: #131315;
+    --color-inverse-on-surface: #313032;
+    --color-on-tertiary: #5d1900;
+    --color-on-secondary-fixed-variant: #2a4387;
+    --color-on-surface-variant: #c3c6d8;
+    --color-primary-container: #0f62fe;
+    --color-outline-variant: #424656;
+    --color-surface: #131315;
 }
 
 @layer components {
@@ -167,8 +166,8 @@ html {
     box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05), 0 2px 4px -2px rgb(0 0 0 / 0.05);
   }
   :root.dark .glass-panel {
-    background: rgba(17, 24, 39, 0.7);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(28, 27, 29, 0.6);
+    border: 1px solid var(--color-surface-variant);
     box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.2), 0 2px 4px -2px rgb(0 0 0 / 0.1);
   }
   .bento-grid {
