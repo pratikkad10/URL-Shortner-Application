@@ -34,7 +34,7 @@ const Navbar = () => {
     };
 
     return (
-        <header className="bg-surface/80 backdrop-blur-md docked full-width top-0 sticky z-50 border-b border-outline-variant flat no shadows relative">
+        <header className="bg-surface/80 backdrop-blur-md docked full-width top-0 z-50 border-b border-outline-variant flat no shadows relative">
             <div className="flex justify-between items-center w-full px-6 max-w-7xl mx-auto h-16">
                 <div className="flex items-center gap-6">
                     <Link to="/" className="text-headline-md font-headline-md font-bold text-primary hover:opacity-80 transition-opacity">
@@ -43,8 +43,8 @@ const Navbar = () => {
                 </div>
                 <div className="flex items-center gap-4 md:gap-6">
                     <div className="flex items-center gap-1 md:gap-2 text-on-surface-variant">
-                        <IconButton 
-                            icon={isDark ? "light_mode" : "dark_mode"} 
+                        <IconButton
+                            icon={isDark ? "light_mode" : "dark_mode"}
                             onClick={toggleTheme}
                             aria-label="Toggle dark mode"
                         />
