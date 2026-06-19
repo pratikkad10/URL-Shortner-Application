@@ -4,6 +4,7 @@ import { toast } from 'sonner';
 import Input from '../../../components/ui/Input';
 import Button from '../../../components/ui/Button';
 import { useForm } from '../../../hooks/useForm';
+import { getShortUrlBase } from '../../../utils/format';
 
 const CreateLinkForm = ({ onSubmit, isLoading }) => {
     const navigate = useNavigate();
@@ -50,7 +51,7 @@ const CreateLinkForm = ({ onSubmit, isLoading }) => {
                 </label>
                 <div className={`flex items-center grow overflow-hidden ${inputContainerClass}`}>
                     <span className="flex items-center px-4 bg-surface-container-low border-r border-outline-variant text-on-surface-variant font-body-md h-full whitespace-nowrap">
-                        linksnap.io/
+                        {getShortUrlBase()}/
                     </span>
                     <input
                         id="customAlias"

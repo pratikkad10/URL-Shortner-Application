@@ -6,6 +6,7 @@ export const urlsTable = pgTable("urls", {
   shortUrl: varchar({ length: 255 }).notNull().unique(),
   longUrl: text().notNull(),
   userId: uuid().notNull().references(() => usersTable.id),
+  expiresAt: timestamp('expires_at'),
   createdAt: timestamp().defaultNow(),
   updatedAt: timestamp().$onUpdate(() => new Date()),
 });

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { toast } from 'sonner';
 import { urlService } from '../../services/urlService';
+import { getShortUrlOrigin } from '../../utils/format';
 import CreateLinkForm from './components/CreateLinkForm';
 import CreateLinkSuccess from './components/CreateLinkSuccess';
 
@@ -15,11 +16,15 @@ const CreateLink = () => {
         try {
             const response = await urlService.shortenUrl({
                 longUrl: formData.url,
-                shortUrl: formData.alias || undefined
+                shortUrl: formData.alias || undefined,
+                expiresAt: formData.expirationDate || undefined,
+                utmSource: formData.utmSource || undefined,
+                utmMedium: formData.utmMedium || undefined,
+                utmCampaign: formData.utmCampaign || undefined
             });
 
             if (response.success) {
-                const baseUrl = import.meta.env.VITE_FRONTEND_URL || window.location.origin;
+                const baseUrl = getShortUrlOrigin();
                 const shortCode = response.data.shortUrl;
                 const fullShortUrl = `${baseUrl}/${shortCode}`;
 

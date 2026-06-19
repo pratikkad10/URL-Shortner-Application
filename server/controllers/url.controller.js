@@ -11,7 +11,19 @@ export const shortenController = async (req, res) => {
             return res.status(400).json({ success: false, message: "Validation failed", errors: validation.error.message });
         }
 
-        let { longUrl, shortUrl } = validation.data;
+        let { longUrl, shortUrl, expiresAt, utmSource, utmMedium, utmCampaign } = validation.data;
+
+        if (utmSource || utmMedium || utmCampaign) {
+            try {
+                const urlObj = new URL(longUrl);
+                if (utmSource) urlObj.searchParams.set('utm_source', utmSource);
+                if (utmMedium) urlObj.searchParams.set('utm_medium', utmMedium);
+                if (utmCampaign) urlObj.searchParams.set('utm_campaign', utmCampaign);
+                longUrl = urlObj.toString();
+            } catch (e) {
+                console.error("Error appending UTMs", e);
+            }
+        }
 
         if (!shortUrl) {
             shortUrl = await generateShortId();
@@ -23,7 +35,7 @@ export const shortenController = async (req, res) => {
             return res.status(400).json({ success: false, message: "Short URL already exists" });
         }
 
-        const response = await createUrl(shortUrl, longUrl, req.user.id);
+        const response = await createUrl(shortUrl, longUrl, req.user.id, expiresAt);
 
         return res.status(201).json({
             success: true,
@@ -48,6 +60,10 @@ export const redirectController = async (req, res) => {
 
     if (!url) {
         return res.status(404).json({ success: false, message: `${shortUrl} not found` });
+    }
+
+    if (url.expiresAt && new Date() > new Date(url.expiresAt)) {
+        return res.status(410).json({ success: false, message: "This link has expired" });
     }
     
     let ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress;

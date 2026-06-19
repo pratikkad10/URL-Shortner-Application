@@ -3,7 +3,7 @@ import { urlsTable } from "./url.model.js";
 
 export const clicksTable = pgTable("clicks", {
     id: uuid().defaultRandom().primaryKey(),
-    urlId: uuid().references(() => urlsTable.id),
+    urlId: uuid().references(() => urlsTable.id, { onDelete: 'cascade' }),
     timestamp: timestamp().defaultNow(),
     ipAddress: varchar("ip_address", { length: 255 }),
     referrer: varchar("referrer", { length: 255 }),

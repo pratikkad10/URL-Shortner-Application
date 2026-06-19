@@ -2,12 +2,13 @@ import db from "../db/index.js";
 import { urlsTable, clicksTable } from "../models/index.js";
 import { and, eq, count, desc, sql } from "drizzle-orm";
 
-export async function createUrl(shortUrl, longUrl, userId) {
+export async function createUrl(shortUrl, longUrl, userId, expiresAt = null) {
     const [response] = await db.insert(urlsTable).values({
         shortUrl,
         longUrl,
-        userId
-    }).returning({ userId: urlsTable.userId, shortUrl: urlsTable.shortUrl, longUrl: urlsTable.longUrl });
+        userId,
+        expiresAt: expiresAt ? new Date(expiresAt) : null
+    }).returning({ userId: urlsTable.userId, shortUrl: urlsTable.shortUrl, longUrl: urlsTable.longUrl, expiresAt: urlsTable.expiresAt });
     return response;
 }
 

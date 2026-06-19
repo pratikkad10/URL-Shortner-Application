@@ -33,3 +33,14 @@ export const getShortUrlBase = () => {
         return 'localhost:5000';
     }
 };
+
+// Returns the full origin for shortened URLs (e.g. http://localhost:5000)
+export const getShortUrlOrigin = () => {
+    const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000/api/v1';
+    try {
+        const urlObj = new URL(apiUrl);
+        return urlObj.origin;
+    } catch (e) {
+        return 'http://localhost:5000';
+    }
+};

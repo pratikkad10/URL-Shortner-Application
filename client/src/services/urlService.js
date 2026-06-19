@@ -10,5 +10,13 @@ export const urlService = {
             params: { page, limit }
         });
         return response.data;
+    },
+    deleteUrl: async (shortUrl) => {
+        const response = await api.delete(`/url/delete/${shortUrl}`);
+        return response.data;
+    },
+    updateUrl: async (id, data) => {
+        const response = await api.put(`/url/update/${id}`, data);
+        return response.data;
     }
 };

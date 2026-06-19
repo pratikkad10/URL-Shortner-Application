@@ -16,6 +16,10 @@ export const userLoginSchema = z.object({
 export const urlShortenSchema = z.object({
     longUrl: z.string().url("Invalid URL"),
     shortUrl: z.string().optional(),
+    expiresAt: z.string().optional().nullable(),
+    utmSource: z.string().optional().nullable(),
+    utmMedium: z.string().optional().nullable(),
+    utmCampaign: z.string().optional().nullable(),
 });
 
 export const resetPasswordSchema = z.object({

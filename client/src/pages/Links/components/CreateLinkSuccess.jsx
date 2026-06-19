@@ -1,14 +1,31 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
 import Button from '../../../components/ui/Button';
+import { QRCodeCanvas } from 'qrcode.react';
 
 const CreateLinkSuccess = ({ generatedLink, onReset }) => {
     const navigate = useNavigate();
+    const qrRef = useRef(null);
 
     const handleCopy = () => {
         navigator.clipboard.writeText(generatedLink);
         toast.success('Copied to clipboard!');
+    };
+
+    const downloadQRCode = () => {
+        if (!qrRef.current) return;
+        const canvas = qrRef.current.querySelector('canvas');
+        if (canvas) {
+            const pngUrl = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
+            const downloadLink = document.createElement("a");
+            downloadLink.href = pngUrl;
+            downloadLink.download = "linksnap-qr.png";
+            document.body.appendChild(downloadLink);
+            downloadLink.click();
+            document.body.removeChild(downloadLink);
+            toast.success("QR Code downloaded!");
+        }
     };
 
     return (
@@ -36,14 +53,19 @@ const CreateLinkSuccess = ({ generatedLink, onReset }) => {
 
             <div className="flex flex-col md:flex-row justify-center items-center gap-6 border-t border-outline-variant/50 pt-6">
                 <div className="flex flex-col items-center">
-                    <div className="w-32 h-32 bg-surface-container-highest rounded border border-outline-variant flex items-center justify-center mb-2 relative overflow-hidden">
-                        <div className="absolute inset-0 bg-surface-variant opacity-20"></div>
-                        <span className="material-symbols-outlined text-[48px] text-on-surface-variant">qr_code_2</span>
+                    <div ref={qrRef} className="w-32 h-32 bg-white rounded border border-outline-variant flex items-center justify-center mb-2 p-2">
+                        <QRCodeCanvas 
+                            value={generatedLink}
+                            size={112}
+                            bgColor={"#ffffff"}
+                            fgColor={"#000000"}
+                            level={"M"}
+                        />
                     </div>
-                    <button className="text-primary text-label-sm font-label-sm hover:underline">Download QR Code</button>
+                    <button onClick={downloadQRCode} className="text-primary text-label-sm font-label-sm hover:underline">Download QR Code</button>
                 </div>
                 <div className="flex flex-col gap-2 w-full md:w-auto">
-                    <Button className="w-full" onClick={() => navigate('/analytics')}>View Analytics</Button>
+                    <Button className="w-full" onClick={() => navigate(`/analytics/${generatedLink.split('/').pop()}`)}>View Analytics</Button>
                     <Button variant="outline" className="w-full" onClick={onReset}>Create Another Link</Button>
                 </div>
             </div>

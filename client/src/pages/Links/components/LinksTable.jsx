@@ -12,7 +12,9 @@ const LinksTable = ({
     limit, 
     setLimit, 
     totalPages, 
-    totalItems 
+    totalItems,
+    onEdit,
+    onDelete
 }) => {
     const domain = getShortUrlBase();
 
@@ -72,6 +74,8 @@ const LinksTable = ({
                                     formatDate={formatDate} 
                                     formatNumber={formatNumber} 
                                     handleCopy={handleCopy} 
+                                    onEdit={onEdit}
+                                    onDelete={onDelete}
                                 />
                             ))
                         )}
