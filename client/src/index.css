@@ -187,4 +187,14 @@ html {
     outline: 2px solid var(--color-primary-container);
     outline-offset: 2px;
   }
+
+  /* Fix for browser autofill styling overriding dark mode */
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover, 
+  input:-webkit-autofill:focus, 
+  input:-webkit-autofill:active {
+      -webkit-box-shadow: 0 0 0 30px var(--color-surface-container-lowest) inset !important;
+      -webkit-text-fill-color: var(--color-on-surface) !important;
+      transition: background-color 5000s ease-in-out 0s;
+  }
 }
