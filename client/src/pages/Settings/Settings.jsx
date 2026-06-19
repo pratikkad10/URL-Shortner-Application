@@ -11,7 +11,7 @@ const navItems = [
 const Settings = () => {
     return (
         <div className="flex-1 overflow-y-auto p-4 md:p-8 max-w-container-max mx-auto w-full">
-            <h1 className="text-headline-lg font-headline-lg text-on-surface mb-8">Settings</h1>
+            <h1 className="text-headline-md md:text-headline-lg font-headline-md md:font-headline-lg text-on-surface mb-8">Settings</h1>
 
             <div className="flex flex-col md:flex-row gap-8">
                 {/* Settings Navigation (Vertical Tabs) */}
@@ -21,9 +21,9 @@ const Settings = () => {
                             <a
                                 key={item.id}
                                 href={`#${item.id}`}
-                                className={`shrink-0 md:flex-shrink-auto text-label-md font-label-md px-4 py-2 rounded-lg transition-colors ${item.active
-                                        ? 'bg-surface-container-low text-primary font-medium border-l-4 border-primary'
-                                        : 'text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface'
+                                className={`shrink-0 md:flex-shrink-auto text-label-md font-label-md px-4 py-2 md:rounded-lg transition-colors ${item.active
+                                        ? 'text-primary font-medium border-b-2 md:border-b-0 md:border-l-4 border-primary bg-surface-container-low md:bg-surface-container-low'
+                                        : 'text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface border-b-2 border-transparent md:border-none'
                                     }`}
                             >
                                 {item.label}

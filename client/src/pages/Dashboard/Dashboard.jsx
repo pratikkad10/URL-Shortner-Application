@@ -54,7 +54,7 @@ const Dashboard = () => {
             {/* Welcome Section */}
             <div className="mb-8 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                 <div>
-                    <h1 className="text-headline-lg font-headline-lg text-on-surface">
+                    <h1 className="text-headline-md md:text-headline-lg font-headline-md md:font-headline-lg text-on-surface">
                         Welcome back, {user?.firstName ? user.firstName.charAt(0).toUpperCase() + user.firstName.slice(1).toLowerCase() : 'User'}!
                     </h1>
                     <p className="text-body-md font-body-md text-on-surface-variant mt-1">Here's what's happening with your links today.</p>

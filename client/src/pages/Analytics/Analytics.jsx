@@ -78,8 +78,8 @@ const Analytics = () => {
                         <span className="material-symbols-outlined text-sm">arrow_back</span>
                         Back to Link Management
                     </Link>
-                    <h2 className="text-headline-lg font-headline-lg text-on-surface flex items-center gap-3">
-                        <span className="text-primary material-symbols-outlined text-[32px]">link</span>
+                    <h2 className="text-headline-md md:text-headline-lg font-headline-md md:font-headline-lg text-on-surface flex items-center gap-2 md:gap-3 break-all">
+                        <span className="text-primary material-symbols-outlined text-[24px] md:text-[32px] shrink-0">link</span>
                         {domain}/{urlInfo.shortUrl}
                     </h2>
                     <p className="text-body-md font-body-md text-on-surface-variant mt-1">

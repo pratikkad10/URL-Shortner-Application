@@ -23,7 +23,7 @@ const DashboardLayout = () => {
             <TopNavBar />
             <SideNavBar />
             
-            <main className="flex-1 md:ml-[240px] flex flex-col min-h-screen">
+            <main className="flex-1 md:ml-[240px] flex flex-col min-h-screen pb-20 md:pb-0">
                 <DashboardHeader />
                 <Outlet />
             </main>
