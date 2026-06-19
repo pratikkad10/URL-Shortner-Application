@@ -4,6 +4,7 @@ import 'dotenv/config';
 import userRoutes from "./routes/user.routes.js";
 import urlRoutes from "./routes/url.routes.js";
 import analyticsRoutes from "./routes/analytics.routes.js";
+import paymentRoutes from "./routes/payment.routes.js";
 import { authMiddleware } from './middleware/auth.middleware.js';
 import { redirectController } from "./controllers/url.controller.js";
 import cookieParser from 'cookie-parser';
@@ -24,6 +25,7 @@ app.get("/", (req, res) => {
 app.use("/api/v1/user", userRoutes);
 app.use("/api/v1/url", urlRoutes);
 app.use("/api/v1/analytics", analyticsRoutes);
+app.use("/api/v1/payment", paymentRoutes);
 
 app.get("/:shortUrl", redirectController);
 

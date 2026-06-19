@@ -2,8 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Button from '../ui/Button';
 import IconButton from '../ui/IconButton';
+import TierBadge from '../ui/TierBadge';
+import { useAuth } from '../../context/AuthContext';
 
 const Navbar = () => {
+    const { user } = useAuth();
     const [isDark, setIsDark] = useState(false);
 
     useEffect(() => {
@@ -41,8 +44,17 @@ const Navbar = () => {
                         <IconButton icon="notifications" />
                     </div>
                     <div className="hidden md:flex items-center gap-4">
-                        <Link to="/login"><Button variant="ghost" className="text-on-surface">Log in</Button></Link>
-                        <Link to="/register"><Button variant="primary" size="sm">Sign up</Button></Link>
+                        {user ? (
+                            <>
+                                <TierBadge tier={user.tier} />
+                                <Link to="/dashboard"><Button variant="primary" size="sm">Dashboard</Button></Link>
+                            </>
+                        ) : (
+                            <>
+                                <Link to="/login"><Button variant="ghost" className="text-on-surface">Log in</Button></Link>
+                                <Link to="/register"><Button variant="primary" size="sm">Sign up</Button></Link>
+                            </>
+                        )}
                     </div>
                     {/* Mobile Menu Toggle */}
                     <div className="md:hidden">

@@ -31,7 +31,7 @@ const NavItem = ({ label, icon, path, onClick }) => {
 
 const SideNavBar = () => {
     const navigate = useNavigate();
-    const { logout } = useAuth();
+    const { logout, user } = useAuth();
     const mainLinks = [
         { label: 'Dashboard', icon: 'dashboard', path: '/dashboard' },
         { label: 'Links', icon: 'link', path: '/links' },
@@ -52,7 +52,7 @@ const SideNavBar = () => {
                 <div className="w-8 h-8 rounded-lg bg-primary-container text-on-primary flex items-center justify-center font-bold">LS</div>
                 <div>
                     <h1 className="text-headline-sm font-headline-sm font-bold text-on-surface">LinkSnap</h1>
-                    <p className="text-label-sm font-label-sm text-on-surface-variant">Enterprise Plan</p>
+                    <p className="text-label-sm font-label-sm text-on-surface-variant capitalize">{user?.tier || 'Free'} Plan</p>
                 </div>
             </Link>
             <Button className="w-full mb-6 gap-2" onClick={() => navigate('/links/create')}>

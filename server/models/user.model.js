@@ -11,6 +11,7 @@ export const usersTable = pgTable("users", {
   verificationToken: varchar({ length: 255 }),
   resetPasswordOtp: varchar({ length: 6 }),
   resetPasswordOtpExpiry: timestamp(),
+  tier: varchar({ length: 20 }).default('free').notNull(),
   createdAt: timestamp().defaultNow(),
   updatedAt: timestamp().$onUpdate(() => new Date()),
 });

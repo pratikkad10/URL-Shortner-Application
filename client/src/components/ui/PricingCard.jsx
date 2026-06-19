@@ -9,7 +9,8 @@ const PricingCard = ({
     features = [],
     buttonText,
     highlighted = false,
-    buttonVariant = 'outline'
+    buttonVariant = 'outline',
+    onAction
 }) => {
     return (
         <div className={`bg-surface-container-lowest rounded-xl p-6 flex flex-col relative transition-transform ${
@@ -39,7 +40,9 @@ const PricingCard = ({
                 ))}
             </ul>
             
-            <Button variant={buttonVariant} className="w-full justify-center">{buttonText}</Button>
+            <Button variant={buttonVariant} className="w-full justify-center" onClick={() => onAction && onAction(title)}>
+                {buttonText}
+            </Button>
         </div>
     );
 };

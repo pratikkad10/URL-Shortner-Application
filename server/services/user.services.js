@@ -10,6 +10,7 @@ export async function getUserByEmail(email, { includePassword = false } = {}) {
         email: usersTable.email,
         resetPasswordOtp: usersTable.resetPasswordOtp,
         resetPasswordOtpExpiry: usersTable.resetPasswordOtpExpiry,
+        tier: usersTable.tier,
     };
 
     if (includePassword) {
@@ -30,6 +31,7 @@ export async function getUserById(userId, { includePassword = true } = {}) {
         lastName: usersTable.lastName,
         email: usersTable.email,
         isVerified: usersTable.isVerified,
+        tier: usersTable.tier,
     };
 
     if (includePassword) {
