@@ -34,9 +34,7 @@ const Login = () => {
             password: formData.password
         });
 
-        if (result.success) {
-            navigate('/dashboard');
-        } else {
+        if (!result.success) {
             setError(result.error);
         }
         
