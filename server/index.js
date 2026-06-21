@@ -10,8 +10,14 @@ import { redirectController } from "./controllers/url.controller.js";
 import cookieParser from 'cookie-parser';
 
 const app = express();
+const allowedOrigins = [
+  'http://localhost:5173',
+  ...(process.env.FRONTEND_URL ? process.env.FRONTEND_URL.split(',').map(url => url.trim()) : []),
+  /^https:\/\/url-shortner-application.*\.vercel\.app$/
+];
+
 app.use(cors({
-  origin: process.env.FRONTEND_URL || 'http://localhost:5173',
+  origin: allowedOrigins,
   credentials: true
 }));
 app.use(express.json());
